@@ -82,7 +82,11 @@ $ git remote add origin { github repo url }
 $ git remove -v
 ```
 
+- 등록된 원격 저장소를 삭제하려면 아래의 명령어를 참고하세요
 
+```shell
+$ git remote rm { 삭제하고자 하는 remote name}
+```
 
 
 
