@@ -1,6 +1,6 @@
 # Git 
 
-> Git은 분산버전관리 시스템이다. 
+> Git은 분산버전관리 시스ㄹ햐템이다. 
 
 ## 준비하기
 
@@ -69,7 +69,7 @@ $ git status
 
 ### 2. 원격 저장소 등록
 
-- 로컬 저장소와 원격 저장소를 연결하는 일입니다.
+- gg니다.
 
 ```sh
 $ git remote add origin { github repo url }
@@ -106,11 +106,18 @@ github 이나 gitlab의 repo 주소를 복사해둔뒤,
 $ git clone {가져오고자 하는 repo url}
 ```
 
+# 5. 변경사항 다운로드
 
+<<<<<<< HEAD
 
 - GIT
 
 (1) git 공간
+=======
+```python
+$ git pull origin master
+```
+>>>>>>> 13c63eca4df3004af246410b82feea5abb06c995
 
 - working dir
 
