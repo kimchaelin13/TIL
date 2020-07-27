@@ -45,7 +45,53 @@
 
 
 
-## 이름 검색 규칙
+### 함수 안에서 선언한 변수의 효력 범위
+
+함수 안에서 사용할 변수의 이름을 함수 밖에서도 동일하게 사용한다면?? 예시로 학습하자!
+
+```python
+a = 1 #먼저 a라는 변수를 생성하고 1을 대입한다.
+
+def vartest(a): #다음 입력으로 들어온 값에 1을 더해주고 
+    			#결괏값은 돌려주지 않는 vartest함수를 선언한다. 
+    a= a+1
+
+vartest(a) #그리고 vartest 함수에 입력값으로 a를 주었다.
+print(a) #마지막으로 a의 값을 출력하는 print(a) 입력
+```
+
+
+
+결괏값은 2가 아니라 1이 나온다. 이유는 함수 안에서 새로 만든 매개변수는 함수 안에서만 사용하는 "함수만의 변수"이기때문이다. 즉 `def vartest(a)`에서 입력값을 전달 받은 매개변수 a는 함수 안에서만 사용하는 변수이지 함수 밖의 변수 a가 아니라는 뜻이다.
+
+따라서 vartest 함수는 다음처럼 변수 이름을 hello로 한 vartest함수와 완전히 동일하다
+
+```python
+def vartest(hello):
+    hello = hello+1
+```
+
+즉 함수 안에서 사용하는 매개변수는 함수 밖의 변수 이름과는 전혀 상관이 없다는 뜻이다.
+
+더 확실한 이해를 위해 다음 예를 보자
+
+```python
+def vartest(a):
+    a = a + 1
+
+vartest(3)
+print(a)
+```
+
+`vartest(3)`을 수행하면 vartest 함수 안에서 a는 4가 되지만 함수를 호출하고 난 뒤에 `print(a)` 문장은 오류가 발생하게 된다. 그 이유는 print(a)에서 입력받아야 하는 a 변수를 어디에서도 찾을 수가 없기 때문이다. 다시 말하지만 함수 안에서 선언한 매개변수는 함수 안에서만 사용될 뿐 함수 밖에서는 사용되지 않는다. 이것을 이해하는 것은 매우 중요하다.
+
+
+
+
+
+
+
+## 이름 검색 규칙(이부분이 계속 헷갈림. 보충학습이 필요함 )
 
 파이썬에서 사용되는 이름(식별자)들은 이름공간(namespace)에 저장되어 있습니다.
 
@@ -67,29 +113,41 @@ print(3)
 ```
 
 1. `print()` 코드가 실행되면
+
 2. 함수에서 실행된 코드가 아니기 때문에 `L`, `E` 를 건너 뛰고,
+
 3. `print`라는 식별자를 Global scope에서 찾아서 `print = 'ssafy`'를 가져오고,
+
 4. 이는 함수가 아니라 문자열이기 때문에 `not callable`하다라는 오류를 내뱉게 됩니다.
+
 5. 우리가 원하는 `print()`은 Built-in scope에 있기 때문입니다.
 
+   
+
 ```python
-a = 10
-b = 20 
+a = 10  # 전역 변수
+b = 20  # 전역 변수
 
 def enclosed():
-    a = 30
+    a = 30  # enclosed함수의 지역 변수
     
     def local():
-        c = 40
-        print(a,b,c)
-        
-    local() #이 코드의 의미??? 왜 없으면 enclosed()가 출력되지 않는거지??
-    a=50
+        c = 40 #local함수의 지역 변수
+        print(a, b, c)
+    
+    return local() #이 코드의 의미?????
+    
+    a = 50  # enclosed함수의 지역 변수이며, local함수에서는 Enclosed Scope
+    
+#함수는 선언만 하고, 호출하지 않으면 아무일도 일어나지 않음. 만약 local()이 없으면 
+#local()이라는 함수를 메모리에 저장만 하게 됨. 
 ```
 
 ```python
 enclosed() #30,20,40 출력 
 ```
+
+
 
 - 전역변수를 바꿔보자
 
@@ -148,7 +206,7 @@ print('global_num:', global_num)
 
 ```python
 def fact(n):
-    result = 1
+    result = 1 #1로 초기화, 곱셈이니까
     for i in range(1,n+1):
         result *= i
     return result
@@ -168,7 +226,8 @@ fact(5) #120 출력
 def factorial(n):
     if n==1:
         return 1
-    return n*factorial(n-1)
+    else:
+        return n*factorial(n-1)
 
 factorial(5) #120
 ```
@@ -221,7 +280,7 @@ factorial(3)
 >
 > 피보나치 값을 리턴하는 두가지 방식의 코드를 모두 작성해주세요.
 
-𝐹0=𝐹1=1F0=F1=1
+𝐹0=𝐹1=1
 
 𝐹𝑛=𝐹𝑛−1+𝐹𝑛−2(𝑛∈{2,3,4,…})Fn=Fn−1+Fn−2(n∈{2,3,4,…})
 
@@ -246,18 +305,24 @@ factorial(3)
 - 반복문을 이용한 코드
 
   ```python
-  def fib_loop(n):
-      list = []
-      for i in range(0,n):
-          if n < 2:
-              list.append(1)
-          
-          else:
-              list.append(list[i-1]+list[i-2])
-              
-      return list[n-1]
+  #빈 []를 만들어야 한다. 인덱싱으로 값을 반환 해야한다
+  #문제에서 0,1일때는 0이다. 이후는 f(n)=f(n-1)+f(n-2)
+  #range함수를 하나씩 돌면서,list에 값을 쌓아나가야 함. 
   
-  fib_loop(5) #list index out of range @@@
+  def fib_loop(number):
+      list = []
+      
+      for i in range(0,number+1):
+          if i <= 1 :
+              list.append(1)
+              
+          else:
+              result = list[i-1]+list[i-2]
+            list.append(result)
+          
+      return list[number-1]
+  
+  fib_loop(5) #5출력  
   ```
-
+  
   
