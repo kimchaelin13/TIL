@@ -37,25 +37,21 @@ import sys
 '''
 sys.stdin = open("input.txt", "r")
 
+
 T = int(input())
+str_T=str(T)
+b=[]
+for i in str_T:
+    #print(i) #타입은 스트링
+    b.append(i)
 
-for test_case in range(1, T + 1): 
+c =list(map(int,b))
+sum=0
+for i in c:
+    sum+=i
 
-    #int()안에 리스트는 못들어간대
-    #split()은 문자열을 어떤 기준으로 쪼개서 리스트로 변환하는 함수
-    #그래서 numbers를 리스트로 바꿀려면
-    #numbers=map(int,input().split())
-    #map함수안에는 iterable한 인자가 모두 들어갈 수 있대! 
-    #그런데 이게 map으로만 감싸면 또 타입에러가 나는데, 이건 그때 선생님이 말씀해주신건데
-    #map이 무슨 객체,,어쩌고 ㅎ ㅎ 라서 list로 형변환을 해줘야 numbers가 최종적으로 리스트로 변환된거래!!
+print(sum)
 
-    numbers=list(map(int,input().split()))
-
-    n_sum = 0
-    for n in numbers :
-        #그리고 여기는 t가 아니라 n!! numbers안의 n을 하나씩 더하는거니까!
-        n_sum = n_sum + n 
-        #그리고 답이 정수형태로 나와야해서 round()로 감싸줍니당,,
-        avg = round(n_sum / len(numbers))
-
-    print(f'#{test_case} {avg}') #그리고 여기 {test_case}라고 써야하고, acg도 변수니까 {}안에 써야하는것같압,,,
+#도대체 이렇게 쓰면 왜 안되나요,,,? 
+#sys를 썻다는데,,ㅋㅋ어쩌라고요;;
+#돌아가ㅡㄴ데 ㅋ;;
