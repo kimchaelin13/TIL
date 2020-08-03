@@ -35,12 +35,11 @@ import sys
 
       단, 채점을 위해 코드를 제출하실 때에는 반드시 아래 구문을 지우거나 주석 처리 하셔야 합니다.
 '''
-#sys.stdin = open("input.txt", "r")
+sys.stdin = open("input.txt", "r")
 
 T = int(input())
 # 여러개의 테스트 케이스가 주어지므로, 각각을 처리합니다.
-
-print(T)
-
-#아니 그리고;;애초에 T = int(input())? 이거뭐야
-#input()으로 abcd를 스트링으로 받음 근데 이걸 int로 어떻게 바꿔요ㅛㅛㅛㅛㅛㅛㅛㅛㅛ
+for test_case in range(1, T + 1):
+    a=input()
+    print(a)
+    print(a.count('KOREA'))

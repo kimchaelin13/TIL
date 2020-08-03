@@ -37,21 +37,56 @@ import sys
 '''
 sys.stdin = open("input.txt", "r")
 
-
 T = int(input())
-str_T=str(T)
-b=[]
-for i in str_T:
-    #print(i) #타입은 스트링
-    b.append(i)
+#일단 연도는 0보다만 크면 됨
+#월은 01~12만 가능
+#일은 1월,3월,5월,7월,8월,10월,12월은 1일~31일 가능
+#2월은 28일, 4월/6월/9월/11월은 1일~30일
+#여기 안들어가면 모두 -1을 내뱉자
+#어떻게 해야하지?
+#22220228
+#문자열로 바꿔서 [0:4]까지 연도고, [4:6]은 월, 그리고 [6:]은 일이다.
+#만약에 월이 1에서 1
+#아,,,int로 바꾸면서 앞에 0 다 사라져서 str로 바꿔도 0이 사라짐,,,왓슏아두
 
-c =list(map(int,b))
-sum=0
-for i in c:
-    sum+=i
+for test_case in range(1, T + 1):
+    numbers=input()
+    year=int(numbers[0:4]) 
+    month=int(numbers[4:6])
+    date=int(numbers[6:])
+    mon_31=[1,3,5,7,8,10,12]
+    mon_30=[4,6,9,11]
+    mon_28=[2]
 
-print(sum)
+    # if len(str(year))<4:
+    #     year=print(str(year).zfill(4))
+        
+    # if len(str(month))< 2:
+    #     year=print(str(month).zfill(2))
 
-#도대체 이렇게 쓰면 왜 안되나요,,,? 
-#sys를 썻다는데,,ㅋㅋ어쩌라고요;;
-#돌아가ㅡㄴ데 ㅋ;;
+    # if len(str(date)) < 2:
+    #     year=print(str(date).zfill(2))
+
+    if year > 0:
+
+    elif year == 101:
+        year == 
+
+        if month in mon_31 and date in range(1,32):
+            result=f'{year}/{month}/{date}'
+
+        elif month in mon_30 and date in range(1,31):
+            result=f'{year}/{month}/{date}'
+        
+        elif month == 2 and date in range(1,29):
+            result=f'{year}/0{month}/{date}'
+
+        
+
+        else:
+            result='-1'
+
+    else:
+        result='-1'
+    
+    print(f'#{test_case} {result}')
