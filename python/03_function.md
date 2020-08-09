@@ -1,4 +1,4 @@
-
+# 함수(function) 1
 
 - 함수(function)
 - 함수의 Output
@@ -30,64 +30,7 @@
       return value
   ```
 
-
-
-
-- 매개변수와 인수가 계속 헷갈렸다. 
-
-  매개변수(parameter)와 인수(arguments)! 매개변수는 함수에 입력으로 전달된 값을 받는 변수를 의미하고, 인수는 함수를 호출할때 전달하는 입력값을 의미한다고 한다.
-
-  ```python
-  def add(a,b): #a와 b는 매개변수
-      return a+b
   
-  print(add(3,4)) #3,4는 인수
-  ```
-
-
-
-### 입력값이 없는 함수
-
-입력값이 없는 함수도 존재한다. 
-
-```python
-def say(): #매개변수가 비어있다
-    return 'hi'
-```
-
-어떻게 활용하나? 
-
-```python
-a = say()
-print(a) #Hi 출력 
-```
-
-위 함수를 쓰기 위해서는 `say()`처럼 괄호 안에 아무 값도 넣지 않아야 한다. 이 함수는 입력값은 없지만 결괏값으로 Hi라는 문자열을 돌려준다. `a = say()`처럼 작성하면 a에 Hi 문자열이 대입되는 것이다.
-
-이처럼 입력값이 없고 결괏값만 있는 함수는 다음과 같이 사용된다.
-
-> 결괏값을 받을 변수 = 함수이름()
-
-
-
-### 결과값이 없는 함수
-
-```python
-def add(a, b): 
-    print("%d, %d의 합은 %d입니다." % (a, b, a+b))
-    
-a = add(3,4)
-print(a)
-    
-```
-
-> 3, 4의 합은 7입니다.
->
-> None
-
-print문은 함수의 구성 요소 중 하나인 `<수행할 문장>`에 해당하는 부분일 뿐이다. 결괏값은 당연히 없다. 결괏값은 오직 return 명령어로만 돌려받을 수 있다.
-
-
 
 ### [연습] 세제곱 함수
 
@@ -114,8 +57,6 @@ def cube(num):
 
 
 
-
-
 ### [연습] 사각형의 넓이와 둘레를 구하는 함수
 
 > 밑변(width)과 높이(height)를 입력받아 사각형의 넓이와 둘레를 반환(return)하는 함수 `rectangle()`을 작성해보세요.
@@ -134,10 +75,6 @@ rectangle(30,20)
   `dir(__builtins__)`
 
   ![](03_function.assets/image-20200722202553235.png)
-
-
-
-
 
 ### [연습] 함수를 만들기
 
@@ -160,8 +97,6 @@ my_max(2,3)
 ```
 
 > '3'가 더 큽니다'
-
-
 
 
 
@@ -239,29 +174,6 @@ def func(x):
 - 입력을 받아 함수 내부에서 활용할 `변수`라고 생각하면 된다.
 - 함수의 정의 부분에서 볼 수 있다.
 
-##### 매개변수 지정하여 호출하기
-
-함수를 호출할때 매개변수를 지정할 수 있다
-
-```python
-def add(a,b):
-    return a+b
-```
-
-```python
-result = add(a=3,b=7)
-print(result) #10 출력
-```
-
-```python
-result = add(b=5,a=3) #b에 5, a에 3을 전달
-print(result) #8 출력
-```
-
-
-
-
-
 #### (2) 전달인자(argument)
 
 ```python
@@ -272,15 +184,9 @@ func(2)
 - 실제로 전달되는 `입력값`이라고 생각하면 된다.
 - 함수를 호출하는 부분에서 볼 수 있다.
 
-
-
-
-
 ### 함수의 인자
 
 함수는 입력값(input)으로 `인자(argument)`를 넘겨줄 수 있다.
-
-
 
 #### 위치 인자(Positional Argument)
 
@@ -301,8 +207,6 @@ def cylinder(r,h):
 print(cylinder(5,2))
 ```
 
-
-
 #### 기본 인자 값(Default Argument Values)
 
 함수가 호출될 때, 인자를 지정하지 않아도 기본값을 설정할 수 있다.
@@ -313,8 +217,6 @@ print(cylinder(5,2))
 def func(p1=v1):
     return p1
 ```
-
-
 
 ##### [연습] 기본 인자값 활용
 
@@ -410,17 +312,15 @@ def greeting(name='익명'):
   func(a='py','thon') #SyntaxError
   ```
 
-
+#### 
 
 #### 가변(임의) 인자 리스트(Arbitrary Argument Lists)
-
-입력값이 몇개가 될지 모를때! 
 
 >  `print()`처럼 개수가 정해지지 않은 임의의 인자를 받기 위해서는 가변 인자 리스트`*args`를 활용합니다.
 >
 > 가변 인자 리스트는 `tuple` 형태로 처리가 되며, 매개변수에 `*`로 표현합니다.
 
-**활용법**
+활용법
 
 ```python
 def func(a,b,*args):
@@ -430,7 +330,7 @@ def func(a,b,*args):
 ```
 
 ```python
-def func(*args): 
+def func(*args):
     for i in args:
         if i*2==0:
             print(i)
@@ -447,31 +347,6 @@ func(1,2,3,4,5,6)
 > 4
 >
 > 6
-
-***args처럼 매개변수 이름 앞에 *을 붙이면 입력값을 전부 모아서 튜플로 만들어 준다!
-
-**활용 예시**
-
-
-
-```python
-def add_mul(choice,*args):
-    if choice == 'add':
-        result = 0
-        for i in args:
-            result += i
-    
-    elif choice == 'mul':
-        result = 1
-        for i in args:
-            result *= i 
-    return result 
-```
-
-```python
-add_mul('add',1,2,3,4,5) #15출력
-add_mul('mul',1,2,3,4,5) #120출력
-```
 
 
 
@@ -510,7 +385,7 @@ my_max(-1, -2, -3, -4) #-1 출력
 
 ##### [연습] 정의되지 않은 키워드 인자를 처리
 
-> `my_dict()` 함수를 만들어 실제로 dictionary 모습처럼 출력 함수를 작성하세요. 
+> `my_dict()` 함수를 만들어 실제로 dictionary 모습처럼 출력 함수를 작성하세요.
 
 ```python
 def my_dict(**kwargs):
@@ -521,111 +396,3 @@ my_dict(한국어='안녕', 독일어='신세영')
 ```
 
 > {'한국어' : '안녕', '독일어' : '신세영'}  #출력 
-
-
-
-```python
-def print_kwargs(**kwargs):
-    print(kwargs)
-   
-```
-
-print_kwargs 함수는 매개변수 kwargs를 출력하는 함수이다. 
-
-```python
-print_kwargs(a=1) #{'a':1} 출력
-print_kwargs(name='foo',age=3) #{'age'=3,'name'='foo'}
-```
-
-`**args`매개변수 이름 앞에 `**`를 붙이면 매개변수 kwargs는 딕셔너리가 되고, 모든 `key=value`형태의 결괏값이 그 딕셔너리에 저장된다. 
-
-
-
-### 매개변수에 초깃값 미리 설정하기
-
-매개변수에 초깃값을 미리 설정해 주는 경우를 학습해보자
-
-```python
-#say_myself 함수는 3개의 매개변수를 받아서 마지막 인수인 man이 True이면 "남자입니다",False이면 "여자입니다."를 출력한다
-
-def say_myself(name,old,man=True):
-    print(f'나의 이름은 {name}입니다.')
-    print(f'나이는 {old}살입니다.')
-    
-    if man:
-        print("남자입니다.")
-    else:
-        print('여자입니다')
-```
-
-이 함수는 매개변수가 `name,old,man=True` 3개다. 여기서 배웠던 것은 `man=True` 처럼 매개변수에 미리 값을 넣어 준것이다. 이것이 바로 함수의 매개변수 초깃값을 설정하는 것이다! 함수의 매개변수에 들어갈 값이 항상 변하는 것이 아니라면 이렇게 함수의 초깃값을 미리 설정해 두면 유용하다고 한다.
-
-```python
-say_myself('강동원',27)
-say_myself('강동원',27,True)
-```
-
-출력 결과 모두 동일한 결과가 나온다
-
-> 나의 이름은 강동원입니다. 
->
-> 나이는 27살입니다. 
->
-> 남자입니다.
-
-만약 초깃값으로 설정된 부분을 False로 한다면??
-
-```python
-say_myself('김채린','24',False)
-```
-
-> 나의 이름은 김채린입니다.
->
-> 나이는 24살입니다.
->
-> 여자입니다.
-
-**주의할 점**
-
-```python
-def say_myself(name, man=True, old): 
-    print("나의 이름은 %s 입니다." % name) 
-    print("나이는 %d살입니다." % old) 
-    if man: 
-        print("남자입니다.") 
-    else: 
-        print("여자입니다.")
-
-```
-
-매개변수의 위치가 매우 중요하다. 이렇게 하면 오류 발생한다.
-
-**SyntaxError: non-default argument follows default argument**
-
-뜻은 초깃값을 설정해 놓은 매개변수 뒤에 초깃값을 설정해 놓지 않은 매개변수는 사용할 수 없다는 뜻이다. 즉 매개변수로 `(name,old,man=True)`는 되지만 `(name,man=True,old)`는 안된다는 것이다. 초기화시키고 싶은 매개변수를 항상 뒤쪽에 놓아야 한다!!! 
-
-
-
-### 헷갈리는 것 정리
-
-- 함수의 결괏값은 언제나 하나이다
-
-```python
-#add_and_mul함수는 2개의 입력인수를 입력받아 더한값과 곱한 값을 돌려주는 함수
-def add_and_mul(a,b):  
-    result =a+b, a*b
-    return result #(7,12)로 돌려줌 
-```
-
-결괏값으로 (7,12)라는 튜플 값을 가지게 된다. 하지만 아래처럼 쓰면 안됨
-
-```python
-def add_and_mul(a,b):
-    return a+b 
-	return a*b #두번째 return문은 실행되지 않는다
-```
-
-즉, 함수는 return 문을 만나는 순간 결괏값을 돌려준 다음 함수를 빠져나간다.
-
-
-

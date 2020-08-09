@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="BranchesTreeState">
+    <expand>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="LOCAL_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="GROUP_NODE:origin" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+    </expand>
+    <select />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="516f49c9-d5de-4908-a16d-506c989f7711" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/00_python_intro.md" beforeDir="false" afterPath="$PROJECT_DIR$/00_python_intro.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/01_data_container.md" beforeDir="false" afterPath="$PROJECT_DIR$/01_data_container.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/02_제어문.md" beforeDir="false" afterPath="$PROJECT_DIR$/02_제어문.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/03_function.md" beforeDir="false" afterPath="$PROJECT_DIR$/03_function.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../수업/python/00_python_intro (1).ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/../수업/python/00_python_intro (1).ipynb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../수업/python/01_data_container.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/../수업/python/01_data_container.ipynb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../수업/python/02_control_flow.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/../수업/python/02_control_flow.ipynb" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
+  </component>
+  <component name="ProjectId" id="1fpGOHz04Zs18yEoA8ROaMxbcCg" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="516f49c9-d5de-4908-a16d-506c989f7711" name="Default Changelist" comment="" />
+      <created>1596907588558</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1596907588558</updated>
+    </task>
+    <servers />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+</project>

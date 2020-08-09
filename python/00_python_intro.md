@@ -10,6 +10,8 @@
 
 - 기본적으로 파이썬에서는 `;`을 작성하지 않는다.
 
+- 한 줄로 표기할때는 `;`을 작성하여 표기할 수 있다.
+
   
   
   ```python
@@ -43,11 +45,11 @@ python이야")
 
 
 
-- 변수는 =을 통해 할당된다.
+- 변수는 `=`을 통해 할당된다.
 
 - 해당 데이터 타입을 확인하기 위해서는 `type=()`을 활용한다. 
 
-- 해당 값의 메모리 주소를 확인하기 위해서는 id()를 활용한다.
+- 해당 값의 메모리 주소를 확인하기 위해서는 `id()`를 활용한다.
 
   
   
@@ -113,6 +115,8 @@ print(y)
   
   print = 'ssafy' #print를 변수의 이름으로 사용할수는 있지만
   print(print)    #print(print)하면 에러가 발생함
+  
+  #print은 이제 'hi'라는 값으로 인식되기 때문에 이전의 기능을 수행하지 못합니다
   ```
 
 
@@ -123,6 +127,8 @@ print(y)
 
 > 숫자(number)타입, 글자(string)타입, 참/거짓(boolean) 타입
 
+
+
 ### 3.1 숫자(Number) 타입 
 
 
@@ -130,7 +136,21 @@ print(y)
 (1) `int`(정수, ingteger)
 
 - 모든 정수는 `int`로 표현된다.
-- 8진수:`0o` / 2진수:`0b`/ 16진수: `0x` 로도 표현 가능하다.
+
+- 8진수:`0o` / 2진수:`0b`/ 16진수: `0x` 로도 표현 가능하다
+
+  ```python
+  binary_number=0b10
+  print(binary_number) #2
+  
+  octal_number=0o10
+  print(octal_number) #8
+  
+  hexadecimal_number = 0x10
+  print(hexadecimal_number) #16
+  ```
+
+  
 
 
 
@@ -147,7 +167,7 @@ print(y)
   ```
 
   ```python
-  round(3.5-3.2,2) == 0.3 
+  round(3.5-3.2,2) == 0.3 #2번째 자리에서 반올림하겠다
   
   > True
   ```
@@ -254,10 +274,17 @@ print(y)
 
   ```python
   #end 옵션은 이스케이프 문자열이 아닌 다른 것도 조작 가능하다. 
+  #end안에 기본 값은 '\n'임.
   
   print('hello, end='\t')
+```
+  
+  ```python
+  print('hello',end='\\')
+  print('bye')
+  #hello\bye
   ```
-
+  
   
 
 #### **String interpolation**
@@ -389,7 +416,8 @@ f'올해는 {now:%Y}년 이번달은 {now:%m}월 오늘은 {now:%d}일'
   print(number)
   ```
 
-
+- int('3.5')를 타이핑하면 오류가 난다.
+- int(float('3.5')) 이렇게 해야 int인 3으로 형변환이 일어난다.
 
 ## 5. 연산자(Operator)
 
@@ -417,6 +445,14 @@ f'올해는 {now:%Y}년 이번달은 {now:%m}월 오늘은 {now:%d}일'
 |   %    | 나머지(modulo) |
 |   **   |    거듭제곱    |
 
+- `divmod`는 나눗셈과 관련된 함수이다.
+
+```python
+a,b=divmod(5,2)
+print(a) #2
+print(b) #1
+```
+
 
 
 ### 5.2 비교 연산자
@@ -433,6 +469,11 @@ f'올해는 {now:%Y}년 이번달은 {now:%m}월 오늘은 {now:%d}일'
 |   `!=`   |        같지않음        |
 |   `is`   |    객체 아이덴티티     |
 | `is not` | 부정된 객체 아이덴티티 |
+
+```python
+3 == 3.0 #True
+3.0 == 3.0 #True
+```
 
 
 
