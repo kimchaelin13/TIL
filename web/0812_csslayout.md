@@ -42,9 +42,9 @@
 
 
 
-**추가 **
+**추가 **!
 
-![]()![image-20200813001745095](CSS_layout.assets/image-20200813001745095.png)
+![]()![image-20200813001745095](0812_csslayout.assets/image-20200813001745095.png)
 
 
 
@@ -127,7 +127,7 @@
   - main axis(메인축)
   - cross axis(교차축)
 
-![]()![image-20200812100511287](web_2.assets/image-20200812100511287.png)
+![]()![image-20200812100511287](0812_csslayout.assets/image-20200812100511287.png)
 
 - flex container가 부모임
 
@@ -154,9 +154,9 @@
 
 ## flex에 적용하는 속성
 
-![]()<img src="CSS_layout.assets/image-20200813003007773.png" alt="image-20200813003007773"  />
+![]()![image-20200813003007773](0812_csslayout.assets/image-20200813003007773.png)
 
-![]()<img src="CSS_layout.assets/image-20200813003059215.png" alt="image-20200813003059215"  />
+![]()![image-20200813003059215](0812_csslayout.assets/image-20200813003059215.png)
 
 
 
@@ -313,13 +313,13 @@ flex-flow: row nowrap;
 
 순서대로 justify-content : flex-start, flex-end, center
 
-![]()![image-20200813003428793](CSS_layout.assets/image-20200813003428793.png)
+![]()![image-20200813003428793](0812_csslayout.assets/image-20200813003428793.png)
 
 
 
 순서대로 align-items: flex-start, flex-end, center
 
-![]()![image-20200813003506705](CSS_layout.assets/image-20200813003506705.png)
+![]()![image-20200813003506705](0812_csslayout.assets/image-20200813003506705.png)
 
 
 
