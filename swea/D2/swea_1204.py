@@ -20,28 +20,42 @@
 import sys
 sys.stdin = open("input.txt", "r")
 
+# T = int(input())
+# for test_case in range(1, T + 1):
+#     N=int(input())
+#     nums=list(map(int,input().split())) #숫자를 리스트에 담고,
+#     newdict={}
+#     for i in nums:
+#         newdict[i]=nums.count(i) #newdict에 각각 카운트한 것을 담았다.
+#     MAX=max(list(newdict.values())) #newdict의 value 중 가장 큰 값을 MAX에 저장
+#     max_count = 0
+#     for key, value in newdict.items():
+#         if max_count < value:  # 4
+#             max_count = value
+#             mode = key
+#         elif max_count == value:  # 5
+#             if mode < key:
+#                 mode = key
+#     print(f'#{test_case} {mode}')
+
+
 T = int(input())
 for test_case in range(1, T + 1):
     N=int(input())
-    nums=list(map(int,input().split())) #숫자를 리스트에 담고,
+    nums=list(map(int,input().split()))
     newdict={}
     for i in nums:
-        newdict[i]=nums.count(i) #newdict에 각각 카운트한 것을 담았다.
-    MAX=max(list(newdict.values())) #newdict의 value 중 가장 큰 값을 MAX에 저장
+        newdict[i]=nums.count(i)
+    MAX=max(list(newdict.values()))
     max_count = 0
     for key, value in newdict.items():
-        if max_count < value:  # 4
+        if max_count < value:
             max_count = value
             mode = key
-        elif max_count == value:  # 5
+        elif max_count == value:
             if mode < key:
                 mode = key
     print(f'#{test_case} {mode}')
-
-
-
-
-
 
 
 
