@@ -1,20 +1,19 @@
-def fib(n):
-    a, b = 1, 1
-    if n == 1 or n == 2:
-        return 1
-    for i in range(n):
-        a,b=b,a+b
-    return a
+import sys
+sys.stdin = open("input.txt", "r")
 
-print(fib(5))
+for i in range(1,int(input())+1):
+    N=int(input())
+    velocity = 0
+    distance = 0
+    for _ in range(N):
+        arr=list(map(int,input().split()))
+        if arr[0] == 1:
+            velocity += arr[1]
+        elif arr[0] ==2 :
+            if velocity > arr[1]:
+                velocity -= arr[1]
+            else:
+                velocity=0
+        distance += velocity
+    print(f'#{i} {distance}')
 
-
-def fibonacci(num):
-    f = [0, 1]
-    for i in range(2, num + 1):
-        f.append(f[i - 2] + f[i - 1])
-    return f[num]
-
-
-# 아래는 테스트로 출력해 보기 위한 코드입니다.
-print(fibonacci(3))
