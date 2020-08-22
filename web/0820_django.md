@@ -472,30 +472,29 @@ INSTALLED_APPS = [
          return redirect('articles:detail', article.pk)
      ```
      
-
-   - new함수는 new.html로 정보를 보내기만 하기 때문에, context가 필요없다!
-
-   - `title = request.POST.get('title')`
-
-     - new.html에서 post방식으로 저장한 데이터를 title에 할당함. POST에 저장이 되어 있는 것임.
+- new함수는 new.html로 정보를 보내기만 하기 때문에, context가 필요없다!
+   
+- `title = request.POST.get('title')`
+   
+  - new.html에서 post방식으로 저장한 데이터를 title에 할당함. POST에 저장이 되어 있는 것임.
      - ~~근데 `get('title')`이 new .html의 title의 name값인가????~~
-
-     
-
-   - `return redirect('articles:detail', article.pk)`
-
-     - 글이 다 써졌으면, 해당 글 디테일 페이지로 redirecting해줌(모듈불러옴) 
+   
+  
+   
+- `return redirect('articles:detail', article.pk)`
+   
+  - 글이 다 써졌으면, 해당 글 디테일 페이지로 redirecting해줌(모듈불러옴) 
      - 위를 다 수행한 뒤 보낼곳 url 이름을 적어주고, article.pk를 넘겨줘 articles의 pk디테일로 보내짐
-
    
 
-   - 그리고 `new.html`과 `create.html`를 작성해보자
-
-     (근데 create.html은 필요없다. 왜냐면, create의 리턴값은 detail의 url로 가는 것으로 설정하였기 때문이다)
-
-     `new.html`
-
-     ```html
+   
+- 그리고 `new.html`과 `create.html`를 작성해보자
+   
+  (근데 create.html은 필요없다. 왜냐면, create의 리턴값은 detail의 url로 가는 것으로 설정하였기 때문이다)
+   
+  `new.html`
+   
+  ```html
      {% extends 'base.html' %}
      
      {% block content %}
@@ -512,16 +511,16 @@ INSTALLED_APPS = [
        <a href="{% url 'articles:index' %}">[뒤로가기]</a>
      {% endblock content %}
      ```
-
-     `<form action="{% url 'articles:create' %}" method="POST"` :POST방식으로 저장된 정보를 action에 있는 url인 create로 넘겨준다! 정보를 넘겨주면 create view함수로 가게 되고, (**정확히 모르겠다**)
-
-     `{% csrf_token %}`: 누군가가 내 create에 마구 요청을 보내면 비용이 많이 들기 때문에 장고에서 아무나 create에 요청을 할 수 없게 장치를 해둔것이고 그게 바로 이것이다. `사이트간 요청 위조`이다. POST를 쓸때는 이 토큰이 무조건 필요함!! 
-
-     `<a href="{% url 'articles:index' %}">[뒤로가기]</a>`: 뒤로가기 버튼을 누르면 `article/index` 로 감(**근데 view로 가는건지 html로 가는건진 모르겠다....,ㅠ**)
-
-    #### GET vs POST
-
-   - GET은 검색/조회, POST는 db에 변화를 일으킴(POST는 요청할때마다 DB에 변화를 일으킴.아무나 DB변경할 수 없도록 보안장치 - CSRF token)
+   
+  `<form action="{% url 'articles:create' %}" method="POST"` :POST방식으로 저장된 정보를 action에 있는 url인 create로 넘겨준다! 정보를 넘겨주면 create view함수로 가게 되고, (**정확히 모르겠다**)
+   
+  `{% csrf_token %}`: 누군가가 내 create에 마구 요청을 보내면 비용이 많이 들기 때문에 장고에서 아무나 create에 요청을 할 수 없게 장치를 해둔것이고 그게 바로 이것이다. `사이트간 요청 위조`이다. POST를 쓸때는 이 토큰이 무조건 필요함!! 
+   
+  `<a href="{% url 'articles:index' %}">[뒤로가기]</a>`: 뒤로가기 버튼을 누르면 `article/index` 로 감(**근데 view로 가는건지 html로 가는건진 모르겠다....,ㅠ**)
+   
+ #### GET vs POST
+   
+- GET은 검색/조회, POST는 db에 변화를 일으킴(POST는 요청할때마다 DB에 변화를 일으킴.아무나 DB변경할 수 없도록 보안장치 - CSRF token)
      
      - 여기서 중요한건, DB에 영향을 주는 여부임. GET을 쓸 때는 `a태그`를 쓰고, POST를 쓸때는 보통 `form`태그를 보통 쓴다.
      
@@ -539,27 +538,27 @@ INSTALLED_APPS = [
          article.save() #저장해야함
          
      ```
-
-     
-
-   9. `detail`
-
-      
-
-   - urls.py로!
-
-     ```python
+   
+  
+   
+9. `detail`
+   
+   
+   
+- urls.py로!
+   
+  ```python
      urlpatterns = [
      	#(전략)
          path('<int:article_pk>/', views.detail, name='detail'),
          #(후략)
      ```
-
-     - `path('<int:article_pk>/', views.detail, name='detail'),` : article pk와 같이 create가 생성되면서 detail url로 보내게 되면서 pk값도 같이 보내고, 그 해당 pk의 detail 템플릿을 나타나게 할꺼야!
-
-   - views.py로!
-
-     ```python
+   
+  - `path('<int:article_pk>/', views.detail, name='detail'),` : article pk와 같이 create가 생성되면서 detail url로 보내게 되면서 pk값도 같이 보내고, 그 해당 pk의 detail 템플릿을 나타나게 할꺼야!
+   
+- views.py로!
+   
+  ```python
      def detail(request, article_pk):
          article = Article.objects.get(pk=article_pk)
          context = {
@@ -567,15 +566,15 @@ INSTALLED_APPS = [
          }
          return render(request,'articles/detail.html',context)
      ```
-
-     - 동적 라우팅이기 때문에 인자가 하나 더 필요함(`article_pk`)
+   
+  - 동적 라우팅이기 때문에 인자가 하나 더 필요함(`article_pk`)
      -   article_pk에 해당하는 article을 찾아서 보여줌. db에서 pk를 이용해 해당되는 데이터를 찾아서 보여줄거야
-
-     
-
-   - html을 만들자
-
-     ```html
+   
+  
+   
+- html을 만들자
+   
+  ```html
      {% extends 'base.html' %}
      {% load humanize %} #naturaltime을 적기 위해서 이거 추가/그리고 settings에서 installed apps에서`django.contrib.humanize`를 추가!! 
      
@@ -596,13 +595,13 @@ INSTALLED_APPS = [
        </form>
      {% endblock content %}
      ```
-
-     `<form action="{% url 'articles:delete' article.pk %}" method="POST">`: 삭제는 db를 변경해야하므로 post방식
-
-     `<a href="{% url 'articles:update' article.pk %}" method="POST">수정하기</a>` : 수정은 a태그가 맞다. 수정할 수 있는 화면을 보여주는 거지 db에서 조회해서 내용을 보여주기만 하면 됨(**근데 우리는 a태그는 get방식, 폼태그는 post방식으로 쓰는걸로 이해했고,,, 그럼 수업때는 a태그가 맞다고 한 이유가 수정한 페이지를 보여주기 때문이었다, 몰라;;;;;;;**
-
+   
+  `<form action="{% url 'articles:delete' article.pk %}" method="POST">`: 삭제는 db를 변경해야하므로 post방식
+   
+  `<a href="{% url 'articles:update' article.pk %}" method="POST">수정하기</a>` : 수정은 a태그가 맞다. 수정할 수 있는 화면을 보여주는 거지 db에서 조회해서 내용을 보여주기만 하면 됨(**근데 우리는 a태그는 get방식, 폼태그는 post방식으로 쓰는걸로 이해했고,,, 그럼 수업때는 a태그가 맞다고 한 이유가 수정한 페이지를 보여주기 때문이었다, 몰라;;;;;;;**
    
 
+   
 10. `delete`
 
     여기서부터 그냥 똑같으니까 복붙
@@ -721,3 +720,28 @@ INSTALLED_APPS = [
 
 
 
+***********
+
+고쳐야 하는거!!!
+
+```HTML
+{% extends 'base.html' %} 
+{% comment %} #5. base.html 가져오기 {% endcomment %}
+
+{% block content %}
+<h1>INDEX</h1>
+<a href="{% url 'articles:create'%}">NEW</a>
+{% for article in articles %} 
+<p>제목: {{article.title}}</p>
+<p>글 제목: {{article.content}}</p>
+
+
+<a href="{% url 'articles:detail' article.pk %}">DETAIL</a>
+
+{% endfor %}
+{% endblock content %}
+
+
+```
+
+`<a href="{% url 'articles:create'%}">NEW</a>`: 이 말은 URLS에서 지정해놓은 APP NAME인 articles안에 있는 create로 가라는 말  ㅎ 
