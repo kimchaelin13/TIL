@@ -291,8 +291,9 @@ https://www.google.com/search?q=css+dinner&oq=css+dinner&aqs=chrome..69i57j0l7.3
 **선언문**
 
 - 속성(Property)
-  - 사람이 읽을 수 있는 식별자
-
+  
+- 사람이 읽을 수 있는 식별자
+  
 - `{}` 선택자(selector) , 선언 요소는 `속성:값;` 이렇게 되어 있음
 
 - 값(Value)
@@ -608,5 +609,773 @@ https://www.google.com/search?q=css+dinner&oq=css+dinner&aqs=chrome..69i57j0l7.3
 
 
 
+#### box - sizing
+
+- 기본적으로 모든 요소의 box-sizing은 content-box
+
+  - padding을 제외하 순수 contents 영역만들 box로 설정
+
+- 일반적으로 영역을 볼 때는 border까지의 너비를 100px 보는 것을 원하는 경우에는?
+
+  `box-sizing`을 `border-box`로 설정!!
+
+  
+
+#### Display
+
+display 속성은 요소를 어떻게 표시할지를 선택하고, visibility 속성은 요소를 보일지 말지 결정하는 속성이다!! 
+
+속성은 4개가 있는데 none은 보이지 않음 / block은 블록박스/ inline은 인라인 박스/ inline-block은 block과 inline 중간 형태!!
+
+- display :block
+  - 이건 요소를 block 요소처럼 표시한다!! 따라서 요소 앞 뒤로 줄바꿈 된다!! 
+  - 기본적으로 **가로 영역을 모두 채우며**, block요소 다음에 등장하는 태그는 줄바꿈이 된것처럼 보인다. width, height 속성을 지정할 수 있다. 
+  - 화면 크기 전체의 가로폭을 차지함
+  - 블록 레벨 요소 안에 인라인 레벨 요소가 들어갈 수 있음
+  - ex) div / ul, ol, li/ p/ hr/ form 등
+
+- display : inline
+  - sspan / a / img / input, label / b , em, i, strong 태그 등이 이에 해당한다.
+  - 기본값임. 요소를 inline처럼 표시한다. 따라서 앞뒤로 줄바꿈 되지 않는다.
+  - 문서에서 볼드, 이탤릭 그랒나 문장에 효과를 주기 위해 존재하는 단위라고 할 수 있음!! 
+  - 문서에서 특정 부분에 색상을 입힌다고 다음에 나오는 글이 줄바꿈 되지 않듯이 `inline` 요소 뒤에 나오는 태그 또한 줄바꿈 되지 않고 바로 오른쪽에 표시된다!! 
+- display : none
+  - 박스가 생성되지 않는다. 따라서 공간을 차지하지도 않는다
+- display  : inline-block 
+  - 요소는 inline인데, 내부는 block처럼 표시한다. 즉, 박스 모양이 inline 처럼 옆으로 늘어섬
 
 
+
+| 속성에 따른 수평 정렬 | block                               | inline            |
+| --------------------- | ----------------------------------- | ----------------- |
+| 왼쪽 정렬             | margin-right:auto;                  | text-align:left;  |
+| 오른쪽 정렬           | margin-left:auto;                   | text-align:right; |
+| 가운데 정렬           | margin-right:auto;margin-left:auto; | text-align:center |
+
+
+
+
+
+## CSS Position (중요)
+
+문서 상에서 요소를 배치하는 방법을 지정함. 
+
+**위치 지정 요소**
+
+- position의 계산값이 relative, absolute, fixed, sticky 중 하나인 요소
+- 값이 static이 아닌 모든 요소
+
+**상대 위치 지정 요소**
+
+- position의 계산값이 relative인 요소
+- top과 bottom은 원래 위치에서의 세로축 거리를, left와 right는 원래 위치에서의 가로축 거리를 지정
+- relative : static 위치를 기준으로 이동(상대 위치)
+  - 설정된 조상의 position이 default값이라면
+  - 이전의 기존 위치도 기억하고 있음, 옮겨져도 다른 것들의 위치는 바뀌지 않음
+
+**절대 위치 지정 요소**
+
+- absolute : static이 아닌 가장 가까이 있는 부모/조상 요소를 기준으로 이동(절대 위치)
+  - 설정된 조상의 position이 default값이 아니라 바로 위 조상을 기준으로!
+  - 이전 기존 위치가 없어짐, 옮겨지면 다른 것들의 위치도 바뀜
+  - body안에 있는 것처럼 보이지만 따로 떨어진 존재
+
+
+
+예시로 보자!!! 
+
+ref : https://aboooks.tistory.com/82
+
+**postion: static**부터 보면, float 설정하지 않은 div는 아래처럼 정렬된다. 주의할 것은 html 문서 body에 margin과 padding을 각각 0으로 지정하지 않으면 아래 화면처럼 공간(파란 부분)이 생긴다. 뒤에서 다룰 relative도 마찬가지다!! 
+
+```html
+
+
+<html>
+<head>
+<style type="text/css">
+#static1
+{
+width:100px;
+height:100px;
+background-color:green;
+position: static;
+}
+
+#static2
+{
+width:100px;
+height:100px;
+background-color:yellow;
+position: static;
+}
+#static3
+{
+width:100px;
+height:100px;
+background-color:red;
+position: static;
+}
+</style>
+</head>
+
+<body>
+<div id="static1">
+1. static
+</div>
+<div id="static2">
+2. static
+</div>
+<div id="static3">
+3. static
+</div>
+</body>
+</html>
+
+```
+
+![]()![image-20200823041300249](0822_webquiz.assets/image-20200823041300249.png)
+
+
+
+다음은 **position:relative** !! 이건 위치계산을 할때 static의 원래 위치부터 계산한다. 위 static 실행화면을 참조해야 이해가 간다. 2번 노란색 사각형은 원래 위치에서 위 0px, 왼쪽 100px 이동하고 3번 빨간 사각형은 원래의 위치에서 위 0px, 그리고 왼쪽 200px으로 설정해서 아래처럼 그림이 나오게 된다.
+
+```html
+#생략
+<style type="text/css">
+#static
+{
+width:100px;
+height:100px;
+background-color:green;
+}
+
+#relative2
+{
+width:100px;
+height:100px;
+background-color:yellow;
+position:relative;
+top:0px;
+left:100px;
+}
+#relative3
+{
+width:100px;
+height:100px;
+background-color:red;
+position:relative;
+top:0px;
+left:200px;
+}
+</style>
+
+#후략 
+```
+
+![]()![image-20200823041631500](0822_webquiz.assets/image-20200823041631500.png)
+
+
+
+그 다음은 **position:absolute**
+
+이건 relative와 달리 원래 위치와 상관없이 위치를 지정할 수 있다!! 하지만 가장 가까운 상위 요소를 기준으로 (이때 static은 제외) 위치가 결정된다. 상위 요소가 없으면 위치는 html기준으로 설정됨!!
+
+1번은 static, 2번과 3번은 absolute인데 absolute는 static이나 relative와 다르게 바깥 쪽에 공간이 생기지 않는다. 
+
+```html
+<style type="text/css">
+#static
+{
+width:100px;
+height:100px;
+background-color:green;
+}
+
+#absolute2
+{
+width:100px;
+height:100px;
+background-color:yellow;
+position:absolute;
+top: 0px;
+left:100px;
+}
+#absolute3
+{
+width:100px;
+height:100px;
+background-color:red;
+position:absolute;
+top: 0px;
+left: 200px;
+}
+</style>
+```
+
+![]()![image-20200823041917672](0822_webquiz.assets/image-20200823041917672.png)
+
+
+
+
+
+바로 위에서 absolute는 상위요소를 기준으로 위치가 결정된다고 했다. 그러면 예를 보기 위해서 **상위에 div를 만들고, 그 안에 absolute을 2개 넣어**보자!  실행하면 relative(녹색) 안에 설정된 absolute는 녹색 부분으로부터 시작해서 위치가 결정됨을 알 수 있다!! 
+
+```html
+<style type="text/css">
+#relative
+{
+width:300px;
+height:300px;
+background-color:green;
+position: relative;
+top: 100px;
+left: 100px;
+}
+
+#absolute2
+{
+width:100px;
+height:100px;
+background-color:yellow;
+position:absolute;
+top:0px;
+left:100px;
+}
+#absolute3
+{
+width:100px;
+height:100px;
+background-color:red;
+position:absolute;
+top: 0px;
+left: 200px;
+}
+</style>
+</head>
+
+<body>
+<div id="relative">
+<div id="absolute2">
+2. absolute
+</div>
+<div id="absolute3">
+3. absolute
+</div>
+</div>
+</body>
+</html>
+
+```
+
+
+
+![]()![image-20200823042148546](0822_webquiz.assets/image-20200823042148546.png)
+
+
+
+## CSS layout
+
+> 웹 페이지에 포함하는 요소를 취합하고 그것들이 어디에 놓일지 제어하는 기술
+>
+> display, position, float, flexbox, gird,,
+
+
+
+### Float
+
+> 한 요소가 정상흐름으로부터 빠져 나와 텍스트 및 인라인 요소가 그 주위를 감싸 자기 컨테이너의 좌, 우측을 따라 배치되어야 함을 지정한다.
+>
+> 속성으로는 none, left, right!! left는 당연히 요소를 왼쪽으로 띄우고, right는 오른쪽으로 띄우게!
+
+
+
+
+
+**clearfix**
+
+- float 요소와 다른 텍스트가 아닌 block 요소간의 레이아웃 깨짐을 막기 위해 다음과 같이 쓴다.
+
+
+
+**floatclear 방법**
+
+- float를 했을때 위로 떠서 그 아래공간으로 다른 요소들이 치고 들어가서 겹쳐질 수 있음
+- 해결방법으로는 float로 띄운 것 뒤에 가상의 박스를 둔다고 생각하자
+- float는 인라인 요소, 텍스트 요소를 감싸는 것, 그래서 그렇지 않은 것들이 겹쳐질 수 있다.
+- 가상 높이를 만들어 부모가 만든 높이를 만들어준다!!
+  1. 항상 float 속성을 적용한 부모 요소에 적용한다
+  2. 스타일 이름은 `.clearfix`라고 짓는다
+  3. `header`태그 다음에 가상요소(`::after`)로 내용이 빈 블럭을 만들고
+  4. 이 가상요소는 `float left,right(both)`를 초기화한다(무시함=띄운것을 무시한다)
+  5. 내용이 빈 컨탠트를 만듦, 
+  6. 다른 요소가 올라오지 못하게 블락으로 설정
+  7. 오른쪽 왼쪽 둘다 오지못하게 막음
+
+```html
+<style>
+    .left {
+      float: left;
+    }
+    .clearfix::after {
+      content: "";
+      display: block;
+      clear: both;
+    }
+</style>
+```
+
+```html
+<body>
+ 
+  <header class="clearfix">
+    <div class="box1 left">div</div>
+  </header>
+  <div class="box2">div</div>
+</body>
+```
+
+- clearfix를 적용하면 파란색박스가 올라가지 못함. 뒤에 가상의 블럭이 막고 있음. (처음에는 빨간 박스가 띄워지면서 뒤로 파란박스가 깔림. 그래서 위처럼 clearfix를 설정한거임)
+
+
+
+
+
+### Flexbox
+
+flexbox라고 불리는 flexible box module을 flexbox 인터페이스 내의 아이템 간 공간 배분과 강력한 정렬기능을 제공하기 위한 1차원 레이아웃 모델로 설계되었다!!
+
+웹 페이지의 컨테이너에 아이템의 폭과 높이 또는 순서를 변경해서 웹페이지의 사용 가능한 공간을 최대한 채우고 이를 디바이스 종류에 따라 유연하게 반영하도록 하는 개념이다!
+
+- css flexible box layout
+  - 1차원 레이아웃을 만드는 것임
+  - 요소와 축 두가지만 기억하자
+
+
+
+**핵심 개념**
+
+- 요소
+  - flex container
+  - flex items
+- 축
+  - main axis(메인축)
+  - cross axis(교차축)
+
+![]()![image-20200823044534472](0822_webquiz.assets/image-20200823044534472.png)
+
+- flex container가 부모고, flex item이 자식이다. 동시에 움직이지 않는다. main 축으로 어떻게 정렬할지, cross축으로 어떻게 정렬할지만 결정한다.
+- 부모 요소에 `display:flex` 또는 `inline flex`를 작성하는 것부터 시작한다.
+
+- 속성으로는
+  - 속성
+    - flex-direction(배치 방향 설정)
+    - justify-content(메인 축 방향 정렬),
+    - align-items(한 줄), align-content(여러 줄), align-self(개별요소) (교차 축 방향 정렬)
+    - flex-wrap, flex-flow, flex-grow
+
+
+
+
+
+**flex container**
+
+- flexbox 레이아웃을 형성하는 가장 기본적인 모델
+- flexbox가 놓여있는 영역
+- flex 컨테이너를 생성하려면 영역 내의 컨테이너 요소의 display 값을 flex 혹은 inline-flex로 지정
+- flex 컨테이너를 선언시 아래와 같이 기본 값이 지정
+  - item은 행으로 나열
+  - item은 주축의 시작 선에서 시작
+  - item은 교차축의 크기를 채우기 위해 늘어남
+  - `flex-wrap` 속성은 `nowrap`으로 지정
+
+```
+Tip !
+
+justify - main axis
+align - cross axis
+
+content - 여러 줄
+items - 한 줄
+self - 개별 요소
+```
+
+
+
+**속성값 포인트를 외우기**
+
+- content
+  - 여러줄
+  - justify는 content만 있음
+- items
+  - 한줄
+- self
+  - 하나를 선택해서 움직임
+  - flexitem개별 요소
+- justify-content
+  - 메인축 기준
+  - 여러 줄 정렬
+- align-items
+  - 교차축 기준
+  - 한 줄 정렬
+- align-self
+  - 교차축 기준
+  - 선택한 요소 하나 정렬
+
+
+
+**기타**
+
+- flex-wrap, flex-flow, flex-grow, order
+
+- flex-wrap: 부모가 정한 너비를 넘치지 않게 한다 넘으면 아래로 떨어짐.
+- flex-flow: column wrap;
+
+- **flexgrow**
+
+  - 1:2:3 아니고, 남은 여백을 쪼개서 나눈거임 1+2+3=6으로 나눈것에서 1개를 주고 2개를 주고 3개를 줌
+  - 상대적 비율 아님
+  - 남은여백을 어떻게 분배할것인가, 누구한테 얼만큼??음수는 사용안됨
+
+  ```html
+  <style>
+      /* 한 자식한테 특정해서 self를 지정해줌 */
+      .item1 {
+          flex-grow: 1;
+      }
+      .item2 {   
+          flex-grow: 2;
+      }
+      .item3 {
+          flex-grow: 3;
+      }
+  </style>
+  ```
+
+  
+
+  - `flex-grow: 1;`
+    - 비율을 뜻하는게 아니라 flexgrow준것들을 다 더한것중 1개
+  - `flex-grow: 2;`
+    - 비율을 뜻하는게 아니라 flexgrow준것들을 다 더한것중 2개
+  - `flex-grow: 3;`
+    - 비율을 뜻하는게 아니라 flexgrow준것들을 다 더한것중 3개
+
+  ![]()![image-20200823050607436](0822_webquiz.assets/image-20200823050607436.png)
+
+
+
+- **order**
+
+  ```html
+  <style>
+  	.item1 {
+        order: 0;
+      }
+      .item2 {
+        order: 1;
+      }
+      .item3 {
+        order: -1;
+      }
+  </style>
+  ```
+
+  
+
+  - `order:0` 기본값이 0이다
+  - `order:1`만약에 item1과 3이 0일때, item2에 1을 주면 제일 뒤로 감
+  - `order:-1` 제일 앞으로 간다
+
+
+
+**이제 예시를 보자!!***
+
+- 부모에게 flex를 주기 전??
+
+  ![]()![image-20200823050921553](0822_webquiz.assets/image-20200823050921553.png)
+
+
+
+- 부모에게 display flex를 주고 난후
+- 메인축 기준(row)으로 기본흐름이 왼쪽부터 오른쪽
+- item은 주축에서 시작하고 높이를 다로 주지 않았지만 교차축 기준으로 나머지 여백이 다 채워짐
+
+![]()![image-20200823051025541](0822_webquiz.assets/image-20200823051025541.png)
+
+
+
+**부모 container에 flex 선언시**
+
+1. item은 행으로 나열된다
+2. item은 메인축의 시작선에서 시작
+3. item은 크로스축의 크기를 채우기 위해 늘어난다.
+
+
+
+**flex에 적용하는 속성**
+
+- 배치 방향 설정(메인축방향 변경: 좌우-> 상하, 상하->좌우 이런식으로 메인축의 수직이 교차축!!
+
+
+
+**배치방향 정렬**
+
+- **flex-direction**(쌓이는 방향 설정/ 이 속성은 플렉스 컨테이너 안에서  플렉스 요소가 배치될 방향을 설정한다!! 이 속성은 아래와 같은 속성값을 가질 수 있따!!)
+  - main-axis 방향만 바뀜 (크로스축은 그냥 수직!)
+  - flexbox는 단방향 레이아웃이기 때문
+  - 왼쪽->오른쪽이 기본값
+  - row(default) : 기본 설정으로, 왼쪽에서 오른쪽으로, 그리고 위족에서 아래쪽으로 배치된다!! 
+  - row-reverse는 반대 : 만약에 direction 속성값이 (left to right)면, 플렉스 요소는 반대로 오른쪽에서 왼쪽으로 배치된다!! 
+  - column은 메인축이 위에서 아래로 흐르는 형태로 바뀜, 만약에 쓰기 방식이 수평이면 플렉스 요소는 수직방향으로 위쪽에서 아래쪽으로 배치된다. 
+  - column-reverse : 플렉스 요소는 수직 방향으로 아래에서 위로 배치된다. 
+
+```html
+<style>
+      /* 부모한테 display flex를 주는 것이 시작 */
+    .flex-container {
+      display: flex;
+/* 부모가 정한 너비를 넘치지 않게함, 넘으면 떨어뜨림 */
+      flex-wrap: wrap;
+      /* 기본값  row */
+      flex-direction: row;
+      /* 쌓이는 방향이 바뀜 321 */
+      flex-direction: row-reverse;
+      /* 메인이 y축으로 바뀜 */
+      flex-direction: column;
+      /* 아래에서 위로 쌓아 올라가는 모습 */
+      flex-direction: column-reverse;
+      /* flex-direction과 flex-wrap의 약어 */
+      flex-flow: column wrap;
+</style>
+```
+
+- 기본값: `flex-direction:row`
+
+![]()![image-20200823051347772](0822_webquiz.assets/image-20200823051347772.png)
+
+
+
+- flex-direction: row-reverse (쌓이는 방향이 바뀜)
+
+![]()![image-20200823051425645](0822_webquiz.assets/image-20200823051425645.png)
+
+
+
+- `flex-direction:column;`
+
+  메인축이 y축으로 바뀜
+
+  ![]()![image-20200823051458375](0822_webquiz.assets/image-20200823051458375.png)
+
+
+
+- flex-direction: column-reverse;
+
+![]()![image-20200823051530426](0822_webquiz.assets/image-20200823051530426.png)
+
+
+
+**메인축 방향 정렬**
+
+- justify-content
+
+> justify-content 속성은 플렉스 요소의 수평 방향 정렬 방식을 설정한다. 
+>
+> justify-content  : flex-start: 기본설정으로 플렉스 요소는 플렉스 컨테이너 앞쪽에서부터 배치된다. 
+>
+> justify-content  : flex-end: 플렉소 요소는 플렉스 컨테이너의 뒤쪽에서부터 배치된다.
+>
+> justify-content : center : 플렉스 요소는 플렉스 컨테이너의 가운데에서부터 배치됩니다.
+>
+> justify-content : space-between : 플렉스 요소는 요소들 사이에만 여유 공간을 두고 배치됩니다.
+>
+> justify-content : space-around : 플렉스 요소는 앞, 뒤, 그리고 요소들 사이에도 모두 여유 공간을 두고 배치됩니다.
+
+```html
+<style>
+	/* 정렬시작 */
+    /* 메인축 정렬 */
+    /* 이게 기본값 */
+    justify-content: flex-start;
+    /* 흐름의 방향은 바뀌지 않고 정렬만 바꼈기 때문에 순서는 그대로, 우측정렬됨 */
+    justify-content: flex-end;
+    /* 메인축 기준으로 가운데로 옴 */
+    justify-content: center;
+    /* 처음과 끝을 각 끝으로 보내고 가운데 것들을 균등하게 나눔 */
+    justify-content: space-between;
+    /* 균등 좌우 정렬 내부요소의 여백이 외부요소의 여백의 2배 */
+    justify-content: space-around;
+    /* 균등정렬 균등하게 띄워져 있음 내부요소 여백과 외부요소 여백이 같음*/
+    justify-content: space-evenly;
+
+</style>
+```
+
+
+
+- `justify-content: flex-start;`
+  - 이게 기본값
+
+[![image-20200812161637115](0822_webquiz.assets/image-20200812161637115.png)](https://github.com/irissooa/irissooa-TIL/blob/master/web/0812_web.assets/image-20200812161637115.png)
+
+
+
+- justify-content: flex-end
+
+  - 흐름의 방향은 바뀌지 않고 정렬만 바뀜. 순서는 그대로, 우측정렬된다
+
+  ![]()![image-20200823051908773](0822_webquiz.assets/image-20200823051908773.png)
+
+
+
+- `justify-content:center`
+
+  메인축 기준으로 가운데로 옴
+
+[![image-20200812162059152](0822_webquiz.assets/image-20200812162059152.png)](https://github.com/irissooa/irissooa-TIL/blob/master/web/0812_web.assets/image-20200812162059152.png)
+
+
+
+
+
+- ```
+  justify-content: space-between;
+  ```
+
+  - 처음과 끝을 각 끝으로 보내고 가운데 것들을 균등하게 나눔
+
+[![image-20200812162231682](0822_webquiz.assets/image-20200812162231682.png)](https://github.com/irissooa/irissooa-TIL/blob/master/web/0812_web.assets/image-20200812162231682.png)
+
+
+
+
+
+- `justify-content: space-around;`
+
+  균등 좌우 정렬/ 내부요소의 여백이 외부요소의 여백의 2배/여백 1:2:2:1
+
+  ![]()![image-20200823052049955](0822_webquiz.assets/image-20200823052049955.png)
+
+  
+
+
+
+
+
+##### 교차축 방향 정렬(align이 붙으면 교차축)
+
+- alilgn-items, align-self, align-content
+- align-content: 여러 줄 사이의 간격을 지정할 수 있다!!
+
+**align-items**:이 속성은 플렉스 요소의 수직 방향 정렬 방식을 설정한다. 이 속성은 한줄만을 가지는 플렉스 박스에서는 효과가 없으며, 두 줄 이상을 가지는 플렉스 박스에서만 효과가 있다. 
+
+> align-items : flex-start 플렉스 요소는 플렉스 컨테이너의 위쪽에 배치됨
+>
+> align-items : flex-end 플렉스 요소는 플렉스 컨테이너 아래쪽에 배치된다
+>
+> align-itmes: center; 플렉스 요소는 플렉스 컨테이너의 가운데에 배치됨
+>
+> align-itmes : baseline : 플렉스 요소는 플렉스 컨테이너의 기준선(baseline)에 배치됩니다.
+>
+> 
+
+```
+<style>
+/* 크로스축 정렬(현재 y축) */
+    /* 원래 div 크기대로 줄어듬 위쪽이 스타트기 때문에 붙어있음*/
+    align-items: flex-start;
+    /* 크로스축 기준 아래 */
+    align-items: flex-end;
+    /* 상하기준으로 중간 */
+    align-items: center;
+    /* 글자들의 크기가 달라져야 바뀜 (baseline 구글 사진 찾기)*/
+    align-items: baseline;
+</style>
+```
+
+- ```
+  align-items: flex-start;
+  ```
+
+  - 여러 줄들을 컨테이너의 꼭대기에 정렬
+  - 원래 div 크기대로 줄어듬 위쪽이 스타트기 때문에 붙어있음
+
+[![image-20200812162710063](0822_webquiz.assets/image-20200812162710063.png)](https://github.com/irissooa/irissooa-TIL/blob/master/web/0812_web.assets/image-20200812162710063.png)
+
+- ```
+  align-items: flex-end;
+  ```
+
+  - 여러 줄들을 컨테이너의 바닥에 정렬
+  - 크로스축 기준 아래
+
+[![image-20200812162827429](0822_webquiz.assets/image-20200812162827429.png)](https://github.com/irissooa/irissooa-TIL/blob/master/web/0812_web.assets/image-20200812162827429.png)
+
+- ```
+  align-items: center;
+  ```
+
+  - 여러 줄들을 세로선 상의 가운데에 정렬
+  - 상하기준으로 중간
+
+[![image-20200812162946712](0822_webquiz.assets/image-20200812162946712.png)](https://github.com/irissooa/irissooa-TIL/blob/master/web/0812_web.assets/image-20200812162946712.png)
+
+- `align-items: baseline;`
+  - 글자들의 크기가 달라져야 바뀜 (baseline 구글 사진 찾기)
+- `space-between`
+  - 여러 줄들 사이에 동일한 간격을 둠
+- `space-around`
+  - 여러 줄들 주위에 동일한 간격을 둠
+- `stretch`
+  - 여러 줄들을 컨테이너에 맞도록 늘림
+
+
+
+**forggy 마지막 문제를 풀어보자!**
+
+flex-wrap: wrap-reverse;
+flex-direction: column-reverse;
+justify-content: center;
+align-content: space-between; 
+
+![]()![image-20200823132405370](0822_webquiz.assets/image-20200823132405370.png)
+
+이렇게 되있는데 어떻게 색깔별로 개구리를 정렬시킬 수 있을까??
+
+```html
+#pond {
+	display:flex;
+
+	flex-wrap: wrap;
+	flex-direction: column-reverse #1
+	justify-content: center; #2
+	align-content: space-between;
+
+}
+```
+
+#1 . 첫번째로 메인축을 y축으로 바꿈! 그리고 아래부터 위로 쌓아ㅌ
+
+#2. 여기서 메인축은 세로축임
+
+이거 약간 순서를 모르겠다. 처음부터 어떻게 생각해야하는지 지금은 해보다가 보면 되는 느낌
+
+
+
+## Grid system
+
+- 반드시 기억해야할 2가지
+- 12개의 column
+- 12는 약수가 가장 많다
+- 1,2,3,4,6,12 비율을 나눌때 다양하게 레이아웃을 나눌 수 있음
+- 5개의 grid breakpoints
+- class="row" -> display :flex가 선언이 돼있음
+- google news는 정돈이 잘돼있음, 시멘틱태그, 그리드시스템 잘씀
+- 12개의 column으로 나뉘어져 있음
+
+**offset**
+
+- `offset-*` 은 지정한 만큼의 column 공간을 무시하고 다음 공간부터 컨텐츠를 적용한다.
+
+![]()![image-20200823171120619](0822_webquiz.assets/image-20200823171120619.png)
