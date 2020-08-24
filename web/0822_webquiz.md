@@ -170,7 +170,7 @@ https://www.google.com/search?q=css+dinner&oq=css+dinner&aqs=chrome..69i57j0l7.3
 
 
 2. 접근성이 좋아진다.
-   - HTML 문서는 HTML 언어와 사람이 읽을 수 있는 content의 조합인데, 검색엔진은 HTML 코드만 잘 읽는다.  그래서 이 검색엔진이 HTML을 잘 이해하도록 시맨틱 태그 사용이 권장되고, 그러면 검색엔진도 무슨 내용인지 이해할 수 있게 된다!! ~~**(라고 하는데 이게 근데 뭔말이지? 이거 한 기억이 없다.)**~~
+   - HTML 문서는 HTML 언어와 사람이 읽을 수 있는 content의 조합인데, 검색엔진은 HTML 코드만 잘 읽는다.  그래서 이 검색엔진이 HTML을 잘 이해하도록 시맨틱 태그 사용이 권장되고, 그러면 검색엔진도 무슨 내용인지 이해할 수 있게 된다!! 
 
 
 
@@ -206,7 +206,7 @@ https://www.google.com/search?q=css+dinner&oq=css+dinner&aqs=chrome..69i57j0l7.3
 
   - `title`: `title` 속성은 링크에 대한 추가 정보를 나타낸다!! 마우스를 링크에 대면 타이틀값이 나옴
 
-  - `target`: 링크가 어떻게 열릴 것인지 지정함.`target="_blank"` 이건 링크를 새탭에서 보여주고,현재 탭에서 링크를 보여주고싶다면 이 속성을 생략한다!!
+  - `target`: 링크가 어떻게 열릴 것인지 지정함.`target="blank"` 이건 링크를 새탭에서 보여주고,현재 탭에서 링크를 보여주고싶다면 이 속성을 생략한다!!
 
   
 
@@ -587,7 +587,7 @@ https://www.google.com/search?q=css+dinner&oq=css+dinner&aqs=chrome..69i57j0l7.3
 ```
 
 - #1: 만약에 위쪽에 마진을 주면 당연히 아래로 움직인다.
-- #2 : 가운데 정렬, 근데 이거 왜 이렇게 되는지 잘 모르겠다 몰라
+- #2 : 가운데 정렬이다!! 상하에 margin 0이고, auto는 좌우정렬! 그래서 가운데정렬
 
 
 
@@ -635,7 +635,7 @@ display 속성은 요소를 어떻게 표시할지를 선택하고, visibility �
   - ex) div / ul, ol, li/ p/ hr/ form 등
 
 - display : inline
-  - sspan / a / img / input, label / b , em, i, strong 태그 등이 이에 해당한다.
+  - span / a / img / input, label / b , em, i, strong 태그 등이 이에 해당한다.
   - 기본값임. 요소를 inline처럼 표시한다. 따라서 앞뒤로 줄바꿈 되지 않는다.
   - 문서에서 볼드, 이탤릭 그랒나 문장에 효과를 주기 위해 존재하는 단위라고 할 수 있음!! 
   - 문서에서 특정 부분에 색상을 입힌다고 다음에 나오는 글이 줄바꿈 되지 않듯이 `inline` 요소 뒤에 나오는 태그 또한 줄바꿈 되지 않고 바로 오른쪽에 표시된다!! 
