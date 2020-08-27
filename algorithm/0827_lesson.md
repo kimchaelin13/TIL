@@ -260,8 +260,8 @@ for t in range(1,T+1):
         #다음칸을 결정
         nr = r+dr[d]
         nc = c+dc[d]
+        
         #범위를 벗어나기 전에 방향을 꺾어줘야 함
-
         if 0<=nr<N and 0<=nc<N and arr[nr][nc]==0:
             #현재좌표를 nr,nc로 갱신
             r,c = nr,nc
@@ -441,7 +441,7 @@ for tc in range(1,T+1):
 
 ### SWEA_4871_그래프 경로(복습하자)
 
-> DFS
+> DFS, 그리고 진짜 함수호출이 너무헷갈린다 다시다시다시다시
 
 ```python
 def DFS(start):
