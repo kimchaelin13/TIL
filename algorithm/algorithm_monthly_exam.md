@@ -80,6 +80,75 @@ for tc in range(1, T+1):
 
 
 
+### 1-1 study2_edging
+
+```python
+for tc in range(1,int(input())+1):
+    N,M,K=map(int,input().split())
+    board = [list(map(int,input().split())) for _ in range(N)]
+
+    result=[]
+    for r in range(N-K+1):
+        for c in range(M-K+1):
+            total_s=0 
+            minus_s=0
+            for k in range(K): #1
+                total_s += sum(board[r + k][c:c + K]) 
+
+                if k != 0  and k != K-1: #2
+                    minus_s += sum(board[r + k][c+1:c+K-1]) #3
+
+            result.append(total_s-minus_s) #4
+    print('#{} {}'.format(tc,max(result)))
+
+```
+
+**Approach**
+
+> 파리퇴치처럼 범위에 있는걸 모두 더하고, 테두리를 제외한 것을 따로 뺸다. 
+
+**things confused**
+
+- #1 : 일단 파리퇴치와 똑같음. 범위안에서 전체를 모두 더할거야. 테두리 생각안함
+- #2 : 근데 다 더하는데 `if k != 0  and k != K-1:` 이렇게 쓰는게 어려웠다. 근데 수아가 알려쥼 ㅎㅎㅎㅎ r을 생각할 필요가 없음. 지금 움직이는건 k, k가 돌면서 위치를 지정하는거임. 그래서 일단 행의 처음과 끝이 필요가 없기 때문에 k!=0이고, 또 k!=K-1 조건을 설정함. 그러면 [r+k] 에 조건이 적용됨
+- #3 :  그리고 세로열을 또 자를건데(테두리만 필요하니까) c+1로 부터 맨 뒤값 필요없으니까 c+K-1로 sum해줘서 테두리안값을 모두 더해버림.
+- #4 : 위치!!! 토탈s를 구하고 마이너스s를 모두 구한다음에! 그때의 값을 result에 더해줘야 함. 그래서 위치가 저기에
+
+
+
+### 수아코드
+
+```python
+T = int(input())
+for tc in range(1,T+1):
+    #배열 행의 개수 N 배열 열의 개수M, 테두리 한 변의 크기 K
+    N, M, K = map(int,input().split())
+    arr = [list(map(int,input().split())) for _ in range(N)]
+    # print(arr)
+
+    MAX = 0
+    for i in range(N-K+1): #행 끝idx에서 K만큼 제외
+        for j in range(M-K+1):#열 끝 idx에서 K만큼 제외
+            #k만큼 돌거야
+            SUM = 0
+            for ik in range(K):
+                for jk in range(K):
+               #크기 K만큼 돌건데 idx가 테두리만 볼거야
+                    #ki = 처음과 끝일때 kj만 돈다
+                    if ik == 0 or ik == K-1:
+                        SUM += arr[i+ik][j+jk]
+                    #ki = 중간일때 kj 처음과 끝만
+                    else:
+                        if jk == 0 or jk == K-1:
+                            SUM += arr[i+ik][j+jk]
+                        # print(arr[i+ik][j+jk])
+            if SUM > MAX:
+                MAX = SUM
+    print('#{} {}'.format(tc,MAX))
+```
+
+
+
 
 
 ### 2. SWEA_1979_어디에 단어가 들어갈까
@@ -194,6 +263,8 @@ for tc in range(1,int(input())+1):
 
 
 
+
+
 ### 4. SWEA_4836_색칠하기
 
 > catarogy: 2차원 배열 
@@ -248,6 +319,45 @@ for tc in range(1,int(input())+1):
   
 
   
+  
+  
+
+### 4-1. 색칠 영역 구하기
+
+```python
+for tc in range(1,int(input())+1):
+    N,M=map(int,input().split())
+    board=[[0]*N for _ in range(N)]
+
+    for _ in range(M):
+        cnt=0
+        x1,y1,x2,y2=map(int,input().split())
+
+        for r in range(x1,x2+1):
+            for c in range(y1,y2+1):
+                if board[r][c] == 0: #1
+                    board[r][c] +=1
+
+    for r in range(N):
+        for c in range(N):
+            if board[r][c]==1:
+                cnt+=1
+    print('#{} {}'.format(tc,cnt))
+```
+
+
+
+**Approach**
+
+> 색칠하기문제랑 똑같음
+>
+> 근데 조건이 다름. 똑같은 영역에 겹치게 색칠이 되도, 2가 되는게 아니라 계속 1임
+
+**things confused**
+
+- #1 : `board[r][c] == 0` 조건을 추가함, 이미 색칠이 되어있다면 다시 색칠을 하면 2가 됨. 근데 나중에 cnt로 뽑을건 1이 색칠되어있는걸 다 카운트해서 뽑을것. 그래서 2가 되면 2가 제외됨. 그래서 `만약에 색칠이 되어 있지 않다면` 그때 1을 더해주는 조건을 추가함(one difference from the above one)
+
+
 
 ### 5. SWEA_1210_Ladder1
 
@@ -341,6 +451,8 @@ for tc in range(1,11):
 - 지금 헷갈리는거 dx=start_x 이거 왜 해야하는지 모르겠다 그냥 start_x로 하면 안되나????
 
   > 안됨. 내가 필요한건 처음에 시작한 x인덱스의 위치임. 근데 처음에 start_x로 바로 +를 해버리고 -를 해버리면, 나중에 ans=start_x를 했을때, 이동하다가 마지막행 x좌표의 인덱스 값이 나와버림. 그래서 dx=start_x를 설정해주고, dx를 움직이고, 나중에 최종 ans에 처음에 start_x로 갱신해야 함
+
+
 
 
 
@@ -465,6 +577,10 @@ for tc in range(1,int(input())+1):
 
 
 
+
+
+
+
 ### 11. SWEA_4864_문자열 비교
 
 > brute force, 완전탐색
@@ -505,6 +621,8 @@ for tc in range(1,int(input())+1):
 **Things confused**
 
 - #1 : 하 범위설정 진짜 헷갈린다. 
+
+
 
 
 
@@ -580,3 +698,189 @@ for tc in range(1,int(input())+1):
 
 
 ### 14. SWEA_회문2부터 하자
+
+## 이거 다시~~~~~~
+
+```python
+for tc in range(1,11):
+    trash=input()
+    result=1 #회문을 찾으면 result를 계속 갱신할것
+    N=100
+    #가로
+    garo=[input() for _ in range(100)]
+
+    for M in range(100,result,-1):
+
+        for ga in garo:
+            for i in range(N-M+1):
+                if ga[i:i+M]==ga[i:i+M][::-1]:
+                    if len(ga[i:i+M])>result:
+                        result=len(ga[i:i+M])
+        if result>M:
+            break
+
+    #세로
+    sero=[]
+    for i in range(100):
+        sero_sub = ''
+        for ga in garo:
+            sero_sub+= ga[i]
+        sero.append(sero_sub)
+
+    #세로를 해보자~~~
+    for M in range(100,result,-1):
+
+        for se in sero:
+            for i in range(N-M+1):
+                if se[i:i+M] == se[i:i+M][::-1]:
+                    if len(se[i:i+M])>result:
+                        result=len(se[i:i+M])
+        if result>M:
+            break
+    print('#{} {}'.format(tc,result))
+```
+
+**Approach**
+
+> 가로, 세로 각각 읽음
+>
+> 그리고 가로행을 읽는데, 가장 100개를 처음에 읽고, 점점 줄여간다.
+
+**things confused**
+
+- if result>M, 이거 왜 바로 나오지? 그리고 생각대충해서 코드 과정 헷갈림
+
+
+
+
+
+### 15. SWEA_4835_구간합
+
+```PYTHON
+for tc in range(1,int(input())+1):
+    N,M=map(int,input().split())
+    arr = list(map(int,input().split()))
+    result=[]
+
+    for i in range(N-M+1):
+        total = 0
+        total+=sum(arr[i:i+M])
+        result.append(total)
+    print('#{} {}'.format(tc,max(result)-min(result)))
+```
+
+**Approach**
+
+> brute force, 완전 탐색
+
+
+
+
+
+### 16. SWEA_4834_숫자 카드
+
+```python
+for tc in range(1,int(input())+1):
+    b=int(input())
+    a = list(map(int,input()))
+    MAX=0
+    result=0
+
+    for i in range(len(a)):
+        cnt=0
+        cnt=a.count(a[i])
+
+        if cnt>MAX:
+            MAX=cnt
+            result=a[i]
+            
+            if MAX==1:
+                result=max(a)
+
+    print('#{} {} {}'.format(tc,result,MAX))
+```
+
+**Approach**
+
+> 
+
+
+
+
+
+### 17. SWEA_4871_그래프 경로
+
+```python
+def DFS(s):
+    global result #2
+    visited[s]=1
+
+    for i in range(1,V+1):
+        if arr[s][i]==1 and visited[i]==0: #3
+            if i == e: #4
+                result=1 
+                return result
+            DFS(i)
+
+
+for tc in range(1,int(input())+1):
+    V,E =map(int,input().split())
+    arr=[[0]*(V+1) for _ in range(V+1)]
+    for i in range(E):
+        u,v=map(int,input().split())
+        arr[u][v]=1
+
+    s,e=map(int,input().split())
+    visited=[0]*(V+1)
+    result=0
+    DFS(s) #1
+
+    print('#{} {}'.format(tc,result))
+```
+
+**Approach**
+
+> start node에서 end node까지 갈 수 있으면, 1을 return함
+
+**things confused**
+
+- #1 : 여기서 나중에 뽑을 result를 선언함. DFS(s)를 호출하세요 하면 위의 함수로 올라감
+- #2 : 밖에서 선언한 result를 조작해서 쓸거니까 global result를 선언
+- #3 : `arr[s][i]==1 and visited[i]==0:` 인접행렬에 1이 적혀있고(경로가 존재), 아직 방문행렬에는 1이 적혀있지 않다면, 그리고 끝까지 돌다가 i==e(end node)와 같다면 result를 1로 바꿔준다. 
+
+
+
+
+
+### 18. SWEA_4843_특별한 정렬
+
+```python
+for tc in range(1,int(input())+1):
+    N=int(input())
+    raw_num=list(map(int,input().split()))
+    sorted_num=sorted(raw_num)
+
+    result=[]
+
+    while len(result) < 10:
+        result.append(sorted_num[-1])
+        result.append(sorted_num[0])
+        sorted_num=sorted_num[1:len(sorted_num)-1]
+    result=' '.join(map(str,result))
+    print('#{} {}'.format(tc,result))
+```
+
+**Approach**
+
+> 숫자를 받고(raw_num) 오름차순으로 정렬하고, while문을 돌리면서 result의 길이가 10보다 작을때까지!! 돌린다. 
+>
+> 그리고 오름차순 정렬된 리스트의 마지막 값을 result에 넣어주고(가장 큰 값)/ 가장 첫번째 값을 넣어주고(가장 작은 값), 그리고 정렬된 sorted_num의 가장 작은 수와 가장 큰 수를 잘라줘야 하니까 처음과 끝을 잘라줌 -> [1:len(sorted_num)-1] 이렇게 자르면 앞 뒤가 잘라짐. 그리고 지금 result에는 [1,2,3]이런식으로 리스트형식으로 담겨있는데, 이거를 문자열로 그대로 뽑아주기 위해!! 
+>
+> `result=' '.join(map(str,result))` 이렇게 해줌! 그러면 1,2,3이 그대로 문자열형태로 나오게 됨. 
+
+
+
+
+
+
+
