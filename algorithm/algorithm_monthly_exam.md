@@ -710,7 +710,6 @@ for tc in range(1,11):
     garo=[input() for _ in range(100)]
 
     for M in range(100,result,-1):
-
         for ga in garo:
             for i in range(N-M+1):
                 if ga[i:i+M]==ga[i:i+M][::-1]:
