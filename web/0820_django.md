@@ -1,5 +1,7 @@
 # Django  made by,,,채린,,수아,,,,,
 
+
+
 ##  새로알게 된 것
 
 - html에서 list indexing = `list.indexing` 사용 ex) 2중 list라면 `list.indexing.indexing`
@@ -226,7 +228,7 @@ INSTALLED_APPS = [
 
    - `from . import views`이 코드를 써줘야 하는데, 지금 내가 있는 폴더 안에서 가져올때는 `.`을 쓴다. 그리고 거기서 `views.py`를 불러온다.
 
-   - 세번째로 `app_name`을 등록해줘야 한다. 왜냐면 위치의 오류를 //////////??
+   - 세번째로 `app_name`을 등록해줘야 한다. 왜냐면 위치의 오류를 정확히 알기 위해!
 
    - 그리고 `urlpatterns`라는 이름으로 적어줘야 함. 그래야 장고가 인식할 수 있음. 
 
@@ -408,8 +410,7 @@ INSTALLED_APPS = [
   ```
 
   - `<a href="{% url 'articles:new' %}">새 글쓰기</a>` 
-    
-    - `앱이름:html`, articles안에 있는 new.html로 들어간다는 뜻임. 새글쓰기 글자를 눌렀을때 !! 
+    - `앱이름:name`, articles안에 있는 new.html로 들어간다는 뜻임. 새글쓰기 글자를 눌렀을때 !! 
   - `{% for article in articles %}`
   
   - articles에 있는 데이터 수만큼 for문을 통해 반복한다는 뜻임!! 
@@ -423,8 +424,7 @@ INSTALLED_APPS = [
   - title은 article의 title을 불러오는 것임
   
   - `<a href="{% url 'articles:detail' article.pk %}">상세 페이지</a>`
-  
-    - 상세페이지를 누르면 articles의 detail로 가는데, 여기서는 특정 페이지로 가야하기 때문에 동적 url을 사용한다. 그걸 사용하려면,  반드시 위처럼 한칸 띄우고, `article.pk`를 적어준다. 
+  - 상세페이지를 누르면 articles의 detail로 가는데, 여기서는 특정 페이지로 가야하기 때문에 동적 url을 사용한다. 그걸 사용하려면,  반드시 위처럼 한칸 띄우고, `article.pk`를 적어준다. 
   -  위를 다 수행한 뒤 보낼곳 url이름을 적어줌 article.pk를 넘겨줘 articles의 pk디테일로 보내짐
   
     
@@ -473,27 +473,28 @@ INSTALLED_APPS = [
      ```
      
 - new함수는 new.html로 정보를 보내기만 하기 때문에, context가 필요없다!
-   
-- `title = request.POST.get('title')`
-   
-  - new.html에서 post방식으로 저장한 데이터를 title에 할당함. POST에 저장이 되어 있는 것임.
-     - ~~근데 `get('title')`이 new .html의 title의 name값인가????~~
-   
   
-   
+- `title = request.POST.get('title')`
+  
+  - new.html에서 post방식으로 저장한 데이터를 title에 할당함. POST에 저장이 되어 있는 것임.
+     - get(title)은 models.py의 title에 저장된 정보를 가져옴
+  
+  
+  
 - `return redirect('articles:detail', article.pk)`
-   
+  
   - 글이 다 써졌으면, 해당 글 디테일 페이지로 redirecting해줌(모듈불러옴) 
      - 위를 다 수행한 뒤 보낼곳 url 이름을 적어주고, article.pk를 넘겨줘 articles의 pk디테일로 보내짐
-   
+     - articles(app_name) views.py의 detail 함수로 보냄!
 
-   
+  
+  
 - 그리고 `new.html`과 `create.html`를 작성해보자
-   
+  
   (근데 create.html은 필요없다. 왜냐면, create의 리턴값은 detail의 url로 가는 것으로 설정하였기 때문이다)
-   
+  
   `new.html`
-   
+  
   ```html
      {% extends 'base.html' %}
      
@@ -510,18 +511,17 @@ INSTALLED_APPS = [
        <hr>
        <a href="{% url 'articles:index' %}">[뒤로가기]</a>
      {% endblock content %}
-     ```
-   
+  ```
+  
   `<form action="{% url 'articles:create' %}" method="POST"` :POST방식으로 저장된 정보를 action에 있는 url인 create로 넘겨준다! 정보를 넘겨주면 create view함수로 가게 되고, (**정확히 모르겠다**)
-   
+  
   `{% csrf_token %}`: 누군가가 내 create에 마구 요청을 보내면 비용이 많이 들기 때문에 장고에서 아무나 create에 요청을 할 수 없게 장치를 해둔것이고 그게 바로 이것이다. `사이트간 요청 위조`이다. POST를 쓸때는 이 토큰이 무조건 필요함!! 
-   
-  `<a href="{% url 'articles:index' %}">[뒤로가기]</a>`: 뒤로가기 버튼을 누르면 `article/index` 로 감(**근데 view로 가는건지 html로 가는건진 모르겠다....,ㅠ**)
-   
+  
+  `<a href="{% url 'articles:index' %}">[뒤로가기]</a>`: 뒤로가기 버튼을 누르면 `article/index` 로 감(**views.py의 index함수로 감!!**)
  #### GET vs POST
-   
+
 - GET은 검색/조회, POST는 db에 변화를 일으킴(POST는 요청할때마다 DB에 변화를 일으킴.아무나 DB변경할 수 없도록 보안장치 - CSRF token)
-     
+  
      - 여기서 중요한건, DB에 영향을 주는 여부임. GET을 쓸 때는 `a태그`를 쓰고, POST를 쓸때는 보통 `form`태그를 보통 쓴다.
      
    - ```PYTHON
@@ -539,25 +539,25 @@ INSTALLED_APPS = [
          
      ```
    
-  
+    
    
 9. `detail`
    
    
    
 - urls.py로!
-   
+  
   ```python
      urlpatterns = [
      	#(전략)
          path('<int:article_pk>/', views.detail, name='detail'),
          #(후략)
-     ```
-   
+  ```
+  
   - `path('<int:article_pk>/', views.detail, name='detail'),` : article pk와 같이 create가 생성되면서 detail url로 보내게 되면서 pk값도 같이 보내고, 그 해당 pk의 detail 템플릿을 나타나게 할꺼야!
-   
+  
 - views.py로!
-   
+  
   ```python
      def detail(request, article_pk):
          article = Article.objects.get(pk=article_pk)
@@ -565,15 +565,15 @@ INSTALLED_APPS = [
              'article' : article,
          }
          return render(request,'articles/detail.html',context)
-     ```
-   
+  ```
+  
   - 동적 라우팅이기 때문에 인자가 하나 더 필요함(`article_pk`)
      -   article_pk에 해당하는 article을 찾아서 보여줌. db에서 pk를 이용해 해당되는 데이터를 찾아서 보여줄거야
-   
   
-   
+  
+  
 - html을 만들자
-   
+  
   ```html
      {% extends 'base.html' %}
      {% load humanize %} #naturaltime을 적기 위해서 이거 추가/그리고 settings에서 installed apps에서`django.contrib.humanize`를 추가!! 
@@ -594,14 +594,14 @@ INSTALLED_APPS = [
        <a href="{% url 'articles:update' article.pk %}" method="POST">수정하기</a>
        </form>
      {% endblock content %}
-     ```
-   
+  ```
+  
   `<form action="{% url 'articles:delete' article.pk %}" method="POST">`: 삭제는 db를 변경해야하므로 post방식
-   
+  
   `<a href="{% url 'articles:update' article.pk %}" method="POST">수정하기</a>` : 수정은 a태그가 맞다. 수정할 수 있는 화면을 보여주는 거지 db에서 조회해서 내용을 보여주기만 하면 됨(**근데 우리는 a태그는 get방식, 폼태그는 post방식으로 쓰는걸로 이해했고,,, 그럼 수업때는 a태그가 맞다고 한 이유가 수정한 페이지를 보여주기 때문이었다, 몰라;;;;;;;**
-   
+  
 
-   
+  
 10. `delete`
 
     여기서부터 그냥 똑같으니까 복붙
@@ -745,3 +745,4 @@ INSTALLED_APPS = [
 ```
 
 `<a href="{% url 'articles:create'%}">NEW</a>`: 이 말은 URLS에서 지정해놓은 APP NAME인 articles안에 있는 create로 가라는 말  ㅎ 
+
