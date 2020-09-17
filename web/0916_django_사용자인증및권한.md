@@ -96,12 +96,21 @@ html에서 accounts:sign up은 앞은 app_name, 뒤에는 url에서 name!
 
 user도 crud를 벗어날수가 없음. 이건 create view함수를 만드는 것과 동일함
 
+signup은 user table새로 뭔가 만드는 일! user 관련해서는 아티클해서 했었던 모델과 폼을 이미 장고에서 만들어놓은 것을 쓸것이기 때문에 여기서는 따로 만들 필요가 없음(아티클의 create와 다른점) 가져오기위해 아래를 import함
+
+`from django.contrib.auth.forms import UserCreationForm` 
+
+signup에서 해줄일은 두개다. 페이지를 보여주고, signup로직을 처리해주는 일!!
+
+
+
 ```python
 from django.contrib.auth.forms import UserCreationForm #1
 def signup(request):
     if request.method == 'POST':
         pass
     else:
+        #폼을 보여줘야하니까 폼을 만들고
         form = UserCreationForm()
     context = {
         'form':form,
@@ -111,6 +120,25 @@ def signup(request):
 ```
 
 #1 : forms.py를 만들지 않고 이미 만들어져있는걸 쓸꺼니까 import를 할거다
+
+> ##### 빈산쌤 풀이
+>
+> ```python
+> def signup(request):
+>     if request.method == 'POST':
+>         form = UserCreationForm(request.POST)
+>         if form.is_valid():
+>             form.save()
+>             return redirect('accounts:index') #여기서는 아티클즈 안만들었다
+>     else:
+>         form=UserCreationForm()
+>     context={
+>         'form':form,
+>     }
+>     return render(request,'accounts/signup.html',context)
+> ```
+>
+> 
 
 
 
@@ -133,6 +161,10 @@ def signup(request):
 </form>
 {% endblock content %}
 ```
+
+***1. 그럼 여기서 POST방식으로 입력이 들어오면 accounts의 signup url로 가세요 라는 뜻인가?***
+
+***2. signup.html에서 context에 담은 form이 ? 이게뭐지 이거는 저번에 한것 다시보기!***
 
 
 
@@ -163,6 +195,8 @@ def signup(request):
     return render(request,'accounts/signup.html',context)
 
 ```
+
+(practice에서 여기까지 했는데, 계속 operation  오류가 났는데, migrate를 안해서 그랬다)![image-20200917102330188](0916_django_사용자인증및권한.assets/image-20200917102330188.png)
 
 
 
@@ -268,6 +302,8 @@ html의 특징을 알아야 하는데, html의 특징은 연결성이 없다
 >
 > UserCreationForm은 모델폼이다. 그래서 메타클래스가 존재한다. 그런데 authentication,, 이거 뭔차이야? 
 
+
+
 (1) urls.py
 
 `path('login/',views.login, name='login'),`
@@ -285,6 +321,7 @@ from django.contrib.auth.forms import UserCreationForm,AuthenticationForm
 
 def login(request):
     if request.method == 'POST':
+   		#로그인하라고 authent-()로 줬기 때문에 제출받을때도 authen()으로 받음 
 
         form=AuthenticationForm(request, request.POST)
         if form.is_valid():
@@ -303,11 +340,30 @@ def login(request):
 
 원래대로 하면 login 이름이 겹쳐서 #1 처럼 이름을 바꿔주고 하면 로긴이 정상적으로 이뤄짐. 
 
+**(3)login.html**
+
+```html
+{% extends 'base.html' %}
+
+{% block content %}
+<h1>로그인</h1>
+{% comment %} 뭔가를 만들어달라고 하는 요청이니까 POST {% endcomment %}
+{% comment %} 그런데 get, post같은 url쓰기 때문에 액션이 없어도 됨. 액션 없으면 현재 url로 보내지기 때문에 {% endcomment %}
+<form action="{% url 'accounts:login' %}" method="POST">
+  {% csrf_token %}
+  {{ form.as_p }}
+  <input type="submit">
+</form>
+{% endblock content %}
+```
+
 
 
 로그인에 성공했다면, 쿠키에 세션 아이디가 들어있음. 그리고 new로 가도 세션아이디가 유지되어있음. 그말은 즉슨, 계속해서 로그인되어있다는 것을 장고서버에 알리는 것이다. 로그아웃을 할려면 쿠키에 세션아이디를 없애면 로그아웃된 상태
 
 ![image-20200916140610598](0916_django_사용자인증및권한.assets/image-20200916140610598.png)
+
+
 
 
 
@@ -346,9 +402,17 @@ def login(request):
 
 (1) urls.py
 
+`path('logout/',views.logout, name='logout'),`
+
 
 
 (2) views.py
+
+```python
+def logout(request):
+    auth_logout(request)
+    return redirect('articles:index')
+```
 
 
 
@@ -634,7 +698,7 @@ def update(request):
 
 {% block content %}
 <h1>회원정보 수정</h1>
-<form action="" method="POST">
+<form action="" method="POST"> #1
   {% csrf_token %}
   {{ form.as_p }}
   <input type="submit">
@@ -643,7 +707,7 @@ def update(request):
 
 ```
 
-
+#1 action이 비어있는데 ,urls.py에보면 보여주는애도 업데이트,처리하는애도 업데이트기때문에 똑같은 url을 쓰니까 굳이 작성하지 않았다.
 
 base.html 수정
 
@@ -768,4 +832,199 @@ def update(request):
 
 
 ### 4. 회원 탈퇴
+
+
+
+
+
+
+
+
+
+
+
+**실습**
+
+index에서 a태그로, a태그는 get방식으로만 
+
+근데 로그아웃으로는 무조건 post방식으로 하게 됨. 
+
+![image-20200917144157687](0916_django_사용자인증및권한.assets/image-20200917144157687.png)
+
+1. @require_POST + index.html에서 a태그 로 쓰면 충돌됨 - 정리
+
+
+
+2. 
+
+![image-20200917151513079](0916_django_사용자인증및권한.assets/image-20200917151513079.png)
+
+
+
+request.get에 next가 있으면 저기로 reidrect가 되는데 없으면 index로 가게 되는데, index로 만 감. 그럼 값이 안들어가는건가? 라고 의심할 수 있음
+
+```python
+@require_http_methods(['GET','POST'])
+def login(request):
+    if request.user.is_authenticated:
+        return redirect('accounts:index')
+
+    if request.method == 'POST':
+        form=AuthenticationForm(request,request.POST)
+        if form.is_valid():
+            #로그인
+            #아디,비번을 통해서 user가 있는지 체크해야하고
+            #client-쿠키에 세션아이디 적어줘야하고
+            #server-세션아이디-사용자정보-적어야하고
+            #form.get_user는 사용자정보 가져옴
+            #auth_login의 첫번째 인자는 request, 두번째인자는 user
+            auth_login(request,form.get_user())
+            return redirect(request.GET.get('next') or 'accounts:index')
+
+    else:
+        #로그인용폼을 준다.
+        form = AuthenticationForm()
+    context = {
+        'form':form,
+    }
+    return render(request,'accounts/login.html',context)
+```
+
+-> request.GET.get('next') 에 아무값도 담겨있지 않음. 
+
+가능성: 
+
+1. request.GET.get('next')  문법자체가 잘못됐을 가능성
+2.  login.html의 form에서 next를 전달하지못하고 있는거 아닐까? 
+3. 빈칸 ㅇㅉㄱ로 하라는데 이해x
+
+
+
+>  state:ㅅㅂ
+>
+> 로그인 안한채로 로그아웃을 하려고 하면(http://127.0.0.1:8000/accounts/logout 을 타이핑)
+>
+> 로그인을 안한 상태니까 자동으로 로그인화면이 들어가게 되고, 로그인을 하자마자 로그아웃이 되야함. 근데? 지금 내상태: 저렇게 쳐도 로그인 페이지로 들어가지도 않음.ㅅㅂ
+
+근데 어쨌든 위가 잘 작동이 되면?  login html에서 `<form action="" method="POST">` 이렇게 바꿔줘야 함.
+
+
+
+주소를 쳐서 들어가는건 get방식인데, 
+
+
+
+**하영이가 알려줫다**
+
+
+
+1. http://127.0.0.1:8000/accounts/next?/login   상대경로 
+2. http://127.0.0.1:8000/accounts/login    절대경로
+
+
+
+로그인 안한채로 로그아웃을 할려고 한다. 그럼 서버는 로그아웃 상태니까 로그인창을 띄워준다. 그리고 내 의도는 로그인을 하자마자 로그아웃 된 상태로 인덱스 페이지로 넘어가기를 원함.
+
+근데 만약에 login.html에서 `<form action="{% url 'accounts:login' %}" method="POST">`이렇게 치게 되면, 2번  url인 상태로 정보를 보내준다. 
+
+(login 함수에서 )
+
+`return redirect(request.GET.get('next') or 'accounts:index')`
+
+이 함수의 의미는 request안에 next가 있니? 이건데 만약에 아래 html상태로 가게되면? next가 없음 그래서 그냥 무조건 accouts:index로 redirect되게 됨. 우리가 원하는 바가 아님. 로그아웃 안된 상태로 계속 인덱스로 넘어감! 
+
+```html
+{% extends 'base.html' %}
+{% block content %}
+<h1>로그인</h1>
+
+<form action="{% url 'accounts:login' %}" method="POST">
+  {% csrf_token %}
+  {{ form.as_p }}
+  <input type="submit" value = "로그인">
+</form>
+<a href="{% url 'accounts:index' %}">메인페이지</a>
+{% endblock content %}
+```
+
+
+
+그런데 만약에 아래처럼 쓰면 1이 그대로 담겨서 정보가 넘어가게 된다. 그러면 request안에 next가 담겨있고, 그러면 `return redirect(request.GET.get('next') or 'accounts:index')` 앞에가 실행되서  logout함수로 들어가게 됨
+
+```python
+def logout(request):
+
+    if request.user.is_authenticated:
+        auth_logout(request)
+    return redirect("accounts:index")
+```
+
+그리고 지금 로그인 상태니까 if문안으로 통과 -> 로그아웃되고 -> account:index로 들어가서 
+
+로그아웃된 상태로 나오게 됨!!
+
+
+
+```html
+{% extends 'base.html' %}
+{% block content %}
+<h1>로그인</h1>
+
+<form action="" method="POST">
+  {% csrf_token %}
+  {{ form.as_p }}
+  <input type="submit" value = "로그인">
+</form>
+<a href="{% url 'accounts:index' %}">메인페이지</a>
+{% endblock content %}
+```
+
+
+
+
+
+로그인 안한채로 로그아웃 -> 로그인창이 떠 근데 next가 추가돼있음 -> 로그인 해서 post로 값을 보내줘 (request) 에 next가 들어있으면 로그아웃에 다시 리다이렉트
+
+accoutns:login일 경우에는 2번 url로 정보를 보내줘 (request) -> 이 request에 next가 있는지 여부를 판단하고 로그아웃으로 갈지 그냥 index로 갈지 결정이야
+
+"" 절대경로 상대경로
+
+
+
+3.
+
+로그인 안한채로 로그아웃할려고 하면? 
+
+```python
+@login_required
+@require_http_methods(['GET','POST'])
+def update(request):
+    #update화면
+    #update로직
+    #article -해당 id를 받아서 article을 찾아서 form 넣어서 수정
+    #pk없어도 되는 이ㅠ, 최주아를 수정하겠다고 하면 request로 들ㅇ오고 instnace로 들어오니까 그걸 수정하는거니까 
+    #없어도딤
+    if request.method =='POST':
+        form=CustomUserChangeForm(request.POST,instance=request.user)
+    else:
+        form= CustomUserChangeForm(instance=request.user)
+    context= {
+        'form':form,
+    }
+    return render(request,'accounts/update.html',context)
+```
+
+
+
+login_required가 있으면 로그인창으로 가게 됨 => 로그인 성공 -> `return redirect(request.GET.get('next') or 'accounts:index')` => account:logout 로 redirect가 되는데 -> 리다이렉트는 get방식 -> 근데 logout함수는 post만 받음 -> mehod not allowed 405 error가 뜬다 ! 
+
+-> 그래서 login_required를 없앤다! 
+
+
+
+
+
+로그인 안한채로 로그아웃을 하려고 하면(http://127.0.0.1:8000/accounts/logout 을 타이핑)
+
+로그인을 안한 상태니까 자동으로 로그인화면이 들어가게 되고, 로그인을 하자마자 로그아웃이 되야함. 근데? 지금 내상태: 저렇게 쳐도 로그인 페이지로 들어가지도 않음.ㅅㅂ
 
