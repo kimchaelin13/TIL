@@ -18,9 +18,15 @@ python -m venv venv
 
  pip install -r requirements.txt 해서 install!
 
+### 0.0 시작
 
+> 처음부터 하려면
+>
+> 폴더 만들기 - 가상환경 만들기 - 프로젝트 만들기(django-admin startproject crud .) - 앱 만들기(python manage.py startapp 이름)
 
 ### 0.시작
+
+
 
 article은 게시글에 대한 역할, user에 대한 역할을 할 앱을 하나 더 만들자, and lets name it 'accounts'
 
@@ -843,13 +849,7 @@ def update(request):
 
 
 
-**실습**
 
-index에서 a태그로, a태그는 get방식으로만 
-
-근데 로그아웃으로는 무조건 post방식으로 하게 됨. 
-
-![image-20200917144157687](0916_django_사용자인증및권한.assets/image-20200917144157687.png)
 
 1. @require_POST + index.html에서 a태그 로 쓰면 충돌됨 - 정리
 
@@ -993,7 +993,7 @@ accoutns:login일 경우에는 2번 url로 정보를 보내줘 (request) -> 이 
 
 3.
 
-로그인 안한채로 로그아웃할려고 하면? 
+로그인 안한채로 로그아웃할려고 하면?  
 
 ```python
 @login_required
@@ -1021,10 +1021,4 @@ login_required가 있으면 로그인창으로 가게 됨 => 로그인 성공 ->
 -> 그래서 login_required를 없앤다! 
 
 
-
-
-
-로그인 안한채로 로그아웃을 하려고 하면(http://127.0.0.1:8000/accounts/logout 을 타이핑)
-
-로그인을 안한 상태니까 자동으로 로그인화면이 들어가게 되고, 로그인을 하자마자 로그아웃이 되야함. 근데? 지금 내상태: 저렇게 쳐도 로그인 페이지로 들어가지도 않음.ㅅㅂ
 
