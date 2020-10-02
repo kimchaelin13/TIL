@@ -233,3 +233,12 @@ $git clone {클론 url} 그럼 폴더가 생김.
 projects01은 데이터를 받아오는 것만 작업하고, 다른 곳에서 작업
 
 깃랩 사이드 바에서 settings-members-select members to invite-선생님-maintainer-
+
+
+
+++
+
+![image-20200928125252364](git.assets/image-20200928125252364.png)
+
+어려우면 그냥 .git폴더를 삭제하고 다시 gitinit을 하시면 됩니다.(프로젝트를 새로 만든 다음에,,,)
+
