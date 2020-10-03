@@ -560,3 +560,21 @@ if you.followers.filter(pk=me.pk).exists(): 이것도 모르겠음 ㅗ
 </div>
 ```
 
+기본
+
+| id가 1인 게시글         | article=Article.objects.get(id=1) |
+| ----------------------- | --------------------------------- |
+| 로그인한 유저           | user=request.user                 |
+| 모든 글의 정보 가저오기 | article=Article.objects.all()     |
+
+ 
+
+헷갈리는 부분(역참조한 최종)
+
+| 1. 이 게시글의 유저 정보                               | article.user(.email) article.user(.username) |
+| ------------------------------------------------------ | -------------------------------------------- |
+| 2. 이 게시글에 좋아요를 누른 모든 유저 정보를 불러오기 | article.like_users()                         |
+| 3. 로그인 한 유저가 작성한 모든 게시글 목록 정보       | user.article_set.all()                       |
+| 4. 로그인 한 유저가 누른 좋아요 게시글 목록 정보       | user.like_articles.all()                     |
+
+https://han-py.tistory.com/160 아 헷갈려~~~~~~~~~~~~~~~~~~~~~~~~~~
