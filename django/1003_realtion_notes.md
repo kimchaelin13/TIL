@@ -1,3 +1,5 @@
+[TOC]
+
 # Relation
 
 > relation이 너무 헷갈려서 [잘 정리된 블로그](https://han-py.tistory.com/160?category=907665) 의 블로그를 따라 치면서 정리하는게 목표
@@ -1153,4 +1155,10 @@ User가 가진 기능은 거의 없다. 대부분의 속성은 User가 아니라
    > ```python
    > <a href="{% url 'accounts:detail' request.user.id %}">{{ request.user.username }}님</a>
    > ```
+
+
+
+```bash
+$ git merge --abort
+```
 
