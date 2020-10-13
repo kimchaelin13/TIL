@@ -864,7 +864,203 @@ console.log(result) // undefined로 출력!
   console.log(speeds)
   
   //리팩토링
-  const speeds = trips.
+  const speeds = trips.map(trip=>trip.distance/trip.time)
   ```
 
   
+
+- `map` 연습(4)
+
+  ```javascript
+  const brands = ['Marvel', 'DC',]
+  const movies = ['IronMan', 'Batman',]
+  
+  const comics = brands.map(function(x,i) {
+      return { name:x, hero:movies[i]}
+  })
+  
+  console.log(comics) // 아래와 같이 출력
+  // [
+  //   { name: 'Marvel', hero: 'Ironman'},
+  //   { name: 'DC', hero: 'Batman'},
+  // ]
+  
+  
+  //리팩토링
+  const comics = brands.map((x,i) => ({name:x, hero:movies[i]}))
+  ```
+
+  
+
+##### ③ `.filter(callback())`
+
+- 주어진 함수의 테스트를 통과한 모든 요소를 모아 새로운 배열을 반환한다.
+
+- 즉, 주어진 콜백 함수로 원하는 요소만 filtering 할 수 있다.
+
+- map과 마찬가지로 원본은 유지
+
+  ```javascript
+  // filter
+  const PRODUCTS = [
+    { name: 'cucumber', type: 'vegetable' },
+    { name: 'banana', type: 'fruit' },
+    { name: 'carrot', type: 'vegetable' },
+    { name: 'apple', type: 'fruit' },
+  ]
+  
+  const FRUIT_PRODUCTS = PRODUCTS.filter( function(product) {
+    return product.type === 'fruit'
+    // 해당 조건이 true 를 만족할 경우에 return
+  })
+  
+  const FRUIT_PRODUCTS = PRODUCTS.filter(product => product.type === 'fruit')
+  console.log(FRUIT_PRODUCTS)
+  ```
+
+  
+
+- `filter` 연습(1)
+
+  ```javascript
+  // users 배열에서 admin 레벨이 true 인 user object 들만 filteredUsers 에 저장하고 
+  // 배열의 두번째 유저의 이름을 출력
+  
+  const users = [
+    { id: 1, admin: false, name: 'justin'},  
+    { id: 2, admin: false, name: 'harry' },
+    { id: 3, admin: true, name: 'tak' },
+    { id: 4, admin: false, name: 'jason' },
+    { id: 5, admin: true, name: 'juan' },
+  ]
+  
+  const filteredUsers = users.filter(function (user) {
+      return user.admin === true
+  })
+  console.log(filteredUsers)
+  console.log(filteredUsers[1].name)
+  
+  //리팩토링
+  //const filteredUsers = users.filter(user=>user.admin===true)
+  ```
+
+  
+
+##### ④ `.reduce(callback())`
+
+- 배열의 각 요소에 대해 주어진 reduce 함수를 실행하고, 하나의 결과 값을 반환한다.
+- reduce는 배열 내의 숫자 총합, 평균 등 배열의 값을 하나로 줄이는 동작을 한다.
+- map 은 배열의 각 요소를 변형한다면, reduce는 배열 자체를 변형한다.
+
+```javascript
+// 총합
+const ssafyTests = [90, 90, 80, 77,]
+const sum = ssafyTests.reduce(function (total, x) {
+  return total += x // return이 있는 쪽에서는 0을 쓸 수 없다.
+}, 0) // 0을 쓰려고 하면 reduce의 세번째 인자로 작성해야 한다.
+
+//리팩토링
+//const sum = ssafyTests.reduce( (total,x) => total +=x,0)
+//const sum = ssafyTests.reduce( (total, x) => total += x )
+
+
+// callback 함수의 첫번째 매개변수는 누적 값(전 단계의 결과) === total
+// 두번째 매개변수는 현재 배열 요소, 현재 인덱스, 배열 자체 순이다. === x
+// 초기값 === 0 ( 첫 total 값 )
+// 만약 초기값이 생략되면 배열의 첫번째 요소가 초기값이 된다. 즉, 위와 같은 상황이면 초기값은 90이 된다.
+```
+
+- `reduce` 연습
+
+```javascript
+// 다음 배열 내의 요소의 총합을 구하시오
+const arr = [0, 1, 2, 3,]
+
+const totalSum = arr.reduce ( function (total,x) {
+    return total += x
+},0)
+// const totalSum = arr.reduce( (total, x) => total += x, 0)
+```
+
+
+
+##### ⑤ `.find(callback())`
+
+- 주어진 callback 함수를 만족하는 첫 번째 요소의 값을 반환
+- 없다면 undefined 를 반환
+- 조건에 맞는 인덱스가 아니라 요소 자체를 원할 때 주로 사용
+
+```javascript
+// find
+const USERS = [
+  { name: 'Tony Stark', age: 45 },
+  { name: 'Steve Rogers', age: 32 },
+  { name: 'Thor', age: 40 },
+  { name: 'Tony Stark', age: 23 },
+]
+
+const new_user = USERS.find(function (user) {
+  return user.name === 'Tony Stark'
+})
+
+// refactoring 적용
+// const new_user = USERS.find( user => user.name === 'Tony Stark')
+console.log(new_user)
+```
+
+
+
+##### ⑥ `.some(callback())`
+
+- 배열 안에 어떤 요소라도(===하나라도) 주어진 callback 함수를 통과하는지 테스트하고, 결과에 따라 boolean 을 return 한다.
+- 빈 배열은 무조건 false 를 return
+- 조건에 맞는 요소를 찾으면 즉시 검색을 멈추고 true 를 return
+- 'or' 연산과 유사
+
+```javascript
+const arr = [1, 2, 3, 4, 5,]
+const result = arr.some(elem => elem % 2 === 0)
+console.log(result) // 짝수가 있으므로 true (이 때, arr에서 원소 2에서 멈춘다.)
+```
+
+
+
+##### ⑦ `.every(callback())`
+
+- 배열 안에 모든 요소가 주어진 callback 함수를 통과하는지 테스트하고, 결과에 따라 boolean 을 return 한다.
+
+- 빈 배열은 무조건 true 를 return
+
+- 배열의 모든 요소가 조건에 맞아야 true, 그렇지 않다면 false
+
+- 조건에 맞지 않는 요소를 찾으면 검색을 멈추고 false 를 return
+
+- 'and' 연산과 유사
+
+  ```javascript
+  // every - 모든!
+  const result2 = arr.every(elem => elem % 2 === 0)
+  console.log(result2) // 모든 원소가 짝수가 아니므로 false(이 때, arr에서 원소 1에서 멈춘다.)
+  ```
+
+- **`some`, `every` 연습**
+  - ram이 32보다 작으면 everyComputers 를 false로 아니면 someComputers 를 true
+
+    ```javascript
+    // some, every
+    const COMPUTERS = [
+      { name: 'macbook', ram: 8},
+      { name: 'gram', ram: 16},
+      { name: 'series9', ram: 32},
+    ]
+    
+    // (1)some
+    const newsomeComputers = COMPUTERS.some(computer => computer.ram < 32)
+    console.log(newsomeComputers) // true
+    
+    // (2)every
+    const neweveryComputers = COMPUTERS.every(computer => computer.ram < 32)
+    ```
+
+    
+
